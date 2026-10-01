@@ -1,0 +1,40 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cc24ba1982d984280970029348e294a3, type: 3}
+  m_Name: ---ReadMe---
+  m_EditorClassIdentifier: 
+  icon: {fileID: 2800000, guid: c55cc35e40a404507a40a804fa1d4852, type: 3}
+  iconMaxWidth: 128
+  projectName: U6 Game Architecture Project
+  author: Sid Greenwood
+  modificationDate: 2026-05-17
+  sections:
+  - heading: '* Event System Note'
+    text: 'Due to seperation of certain main manager canvases and player canvases,
+      it is not easy to utilize a multiplayer event system on each Player Input Object.
+      A standalone Event System is used in scene.
+
+
+      What this entials is that
+      automatic navigation, or special ui features like scroll bars for ui are not
+      suitable to use with more than 1 player. (Think player 1''s scroll being read
+      by both players due to the nature of the standalone Event System.)'
+  - heading: '* Fill Split Screen Note'
+    text: For split screen players with the fill setting on, the player canvas prefab
+      will need to be resized and scaled to account for the non-default resolution
+      that derives from the fill if the screen portion will not be even. (2-3 players).
+  - heading: '* Mobile Note'
+    text: "For mobile, if cursor not desired, turn off the image in the cursor prefab.
+      \n\nAdditionally, make sure to turn on the (normally optional) pause button
+      in the relevant play ui page prefab, since there is no button to pause with
+      on mobile."
+  showReadMeEditor: 1
