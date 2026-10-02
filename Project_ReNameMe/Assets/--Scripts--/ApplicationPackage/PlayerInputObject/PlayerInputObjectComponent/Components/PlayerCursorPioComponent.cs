@@ -185,6 +185,9 @@ public class PlayerCursorPioComponent : PioComponent
 
     [Tooltip("The mouse being managed. Either the Hardware Mouse of K&M player or Virtual Mouse of Gamepad/Touch player")]
     private Mouse _mouse;
+
+    //ADDED FOR SQUIRREL GAME
+    public int MouseId => _mouse == null ? -1 : _mouse.deviceId;
     
     [Header("Dynamic Settings - Don't Modify In Inspector")]
     

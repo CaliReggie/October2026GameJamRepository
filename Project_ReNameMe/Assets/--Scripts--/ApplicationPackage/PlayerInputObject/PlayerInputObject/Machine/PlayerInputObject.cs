@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -439,6 +440,23 @@ public class PlayerInputObject : BaseStateMachine<PlayerInputObject.EPlayerInput
     #endregion
     
     #region Variables, Properties, Fields, Events
+    
+    //ADDED FOR SQUIRREL GAME
+    public int MouseId
+    {
+        get
+        {
+            foreach (PioComponent component in context.playerInputObjectComponents)
+            {
+                if (component is PlayerCursorPioComponent cursor)
+                {
+                    return cursor.MouseId;
+                }
+            }
+            
+            return -1;
+        }
+    }
     
     /// <summary>
     /// Flag to know if this Pio and PioComponents are initialized and ready to use.

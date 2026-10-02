@@ -740,6 +740,35 @@ public class PlayerManager : BaseStateManagerApplicationListener<PlayerManager, 
     
     #region Variables, Properties, Fields, Events
     
+    //ADDED FOR SQUIRREL GAME
+    private int smallSquirrelCorrespondingPlayerVisualIndex = -1;
+    public int SmallSquirrelCorrespondingPlayerVisualIndex {
+        get
+        {
+            return smallSquirrelCorrespondingPlayerVisualIndex;
+        }
+        set
+        {
+            smallSquirrelCorrespondingPlayerVisualIndex = value;
+            OnSquirrelCorrespondingPlayerVisualIndexesChanged?.Invoke();
+        }
+    }
+    
+    private int bigSquirrelCorrespondingPlayerVisualIndex = -1;
+    public int BigSquirrelCorrespondingPlayerVisualIndex {
+        get
+        {
+            return bigSquirrelCorrespondingPlayerVisualIndex;
+        }
+        set
+        {
+            bigSquirrelCorrespondingPlayerVisualIndex = value;
+            OnSquirrelCorrespondingPlayerVisualIndexesChanged?.Invoke();
+        }
+    }
+
+    public event Action OnSquirrelCorrespondingPlayerVisualIndexesChanged;
+    
     /// <summary>
     /// The current PlayerManagerSettingsSo in use by the PlayerManager.
     /// </summary>
