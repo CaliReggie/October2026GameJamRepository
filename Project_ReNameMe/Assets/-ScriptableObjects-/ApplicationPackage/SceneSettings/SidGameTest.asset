@@ -10,15 +10,15 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 2efbdced89e9a90458959f9105eb3295, type: 3}
-  m_Name: -01MenuLimitedManagmenetSettings
+  m_Name: SidGameTest
   m_EditorClassIdentifier: 
-  scenePath: Assets/---Scenes---/ApplicationPackage/-01Menu_LimitedManagement.unity
+  scenePath: Assets/---Scenes---/ApplicationPackage/SidGameTest.unity
   writeChanges: 0
-  playerManagerSettings: {fileID: 11400000, guid: 637227840297d493aa8e699669a7466c, type: 2}
-  constantId: -1
-  chronologicalId: -1
-  nameId: 
-  transitionInStyle: 0
+  playerManagerSettings: {fileID: 11400000, guid: 182bc3caedab00e40b40fa683f98b741, type: 2}
+  constantId: 1
+  chronologicalId: 1
+  nameId: Level 1
+  transitionInStyle: 1
   transitionInCurve:
     serializedVersion: 2
     m_Curve:
@@ -45,7 +45,7 @@ MonoBehaviour:
     m_RotationOrder: 4
   transitionInDuration: 0.75
   uncoveredColor: {r: 0, g: 0, b: 0, a: 0}
-  transitionOutStyle: 1
+  transitionOutStyle: 0
   transitionOutCurve:
     serializedVersion: 2
     m_Curve:

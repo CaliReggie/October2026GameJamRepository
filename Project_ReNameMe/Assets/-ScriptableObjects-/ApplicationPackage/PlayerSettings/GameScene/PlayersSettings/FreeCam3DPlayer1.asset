@@ -10,22 +10,21 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 9b6aa42c5b0f3477eb22f439c68d90e8, type: 3}
-  m_Name: MainCam3DPlayer4
+  m_Name: FreeCam3DPlayer1
   m_EditorClassIdentifier: 
-  writeChanges: 0
   allowManualSwitching: 1
   defaultConfiguration:
     state: 2
     pauseTime: 0
-    cursorConstrained: 1
-  alternateConfiguration:
-    state: 4
-    pauseTime: 1
     cursorConstrained: 0
+  alternateConfiguration:
+    state: 3
+    pauseTime: 1
+    cursorConstrained: 1
   useEnvironmentSpawnPoint: 1
   spawnPosition: {x: 0, y: 0, z: 0}
   spawnEulerRotation: {x: -0, y: 0, z: 0}
-  cameraType: 4
+  cameraType: 2
   cameraSensitivity: 1
   fillSplitScreen: 1
   persistentPlayerCanvas: 1

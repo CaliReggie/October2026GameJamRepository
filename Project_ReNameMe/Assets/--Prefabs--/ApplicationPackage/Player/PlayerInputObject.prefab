@@ -196,7 +196,6 @@ MonoBehaviour:
   thirdPersonFixedVirtual: {fileID: 244590930241367553}
   playerSpecificLayerObjects:
   - {fileID: 5275492436894783035}
-  - {fileID: 618888223794716296}
   - {fileID: 6802678252792213391}
   - {fileID: 8930720767567063041}
   - {fileID: 806280733974387410}
@@ -946,11 +945,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7355954153764436707, guid: e33d25cb27e57374d801567e80d0cb26, type: 3}
       propertyPath: m_LocalRotation.w
-      value: 1
+      value: 0.7071068
       objectReference: {fileID: 0}
     - target: {fileID: 7355954153764436707, guid: e33d25cb27e57374d801567e80d0cb26, type: 3}
       propertyPath: m_LocalRotation.x
-      value: 0
+      value: 0.7071068
       objectReference: {fileID: 0}
     - target: {fileID: 7355954153764436707, guid: e33d25cb27e57374d801567e80d0cb26, type: 3}
       propertyPath: m_LocalRotation.y
@@ -962,7 +961,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7355954153764436707, guid: e33d25cb27e57374d801567e80d0cb26, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
-      value: 0
+      value: 90
       objectReference: {fileID: 0}
     - target: {fileID: 7355954153764436707, guid: e33d25cb27e57374d801567e80d0cb26, type: 3}
       propertyPath: m_LocalEulerAnglesHint.y
@@ -977,11 +976,6 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: e33d25cb27e57374d801567e80d0cb26, type: 3}
---- !u!4 &618888223794716296 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 9065217407325491928, guid: e33d25cb27e57374d801567e80d0cb26, type: 3}
-  m_PrefabInstance: {fileID: 8455689430729362512}
-  m_PrefabAsset: {fileID: 0}
 --- !u!4 &1390835930840315571 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 7355954153764436707, guid: e33d25cb27e57374d801567e80d0cb26, type: 3}

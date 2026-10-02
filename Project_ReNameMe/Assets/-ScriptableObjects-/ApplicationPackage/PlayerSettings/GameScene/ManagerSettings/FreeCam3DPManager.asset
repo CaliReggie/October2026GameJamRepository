@@ -10,15 +10,15 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 8e0790f536c154de88e1070dca2e2b10, type: 3}
-  m_Name: MainCam3DPManager
+  m_Name: FreeCam3DPManager
   m_EditorClassIdentifier: 
-  targetPlayers: 3
-  strictTargetPlayers: 0
+  targetPlayers: 2
+  strictTargetPlayers: 1
   playersSettings:
-  - {fileID: 11400000, guid: 39a1500507f61444484fe1e6cde4d035, type: 2}
-  - {fileID: 11400000, guid: 87878e8a74c037b49a3699e1a13b50c8, type: 2}
-  - {fileID: 11400000, guid: 2cf2805e43b481e43bde08cb248c55e2, type: 2}
-  - {fileID: 11400000, guid: f868960d72673fc4db43ab930ec847e4, type: 2}
+  - {fileID: 11400000, guid: a8bcc3f47b140c34c8e0004ccf33b85a, type: 2}
+  - {fileID: 11400000, guid: 379ead1819b7b1544845faaf95aee23f, type: 2}
+  - {fileID: 11400000, guid: 11bc91b42fb8af24781a2a6854d42041, type: 2}
+  - {fileID: 11400000, guid: 13473d728d6d2df46abbac26f69257c4, type: 2}
   allNeededToPauseTime: 1
-  forceConfigurationTypeMatch: 1
+  forceConfigurationTypeMatch: 0
   targetPlayerConfigurationType: 0

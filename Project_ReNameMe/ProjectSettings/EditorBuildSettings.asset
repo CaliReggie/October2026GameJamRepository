@@ -6,17 +6,20 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
-    path: Assets/---Scenes---/ApplicationPackage/-01Menu_LimitedManagement.unity
-    guid: 3270e176a38259c48ac23847ab0c013c
-  - enabled: 1
-    path: Assets/---Scenes---/ApplicationPackage/-02Game_LimitedManagement.unity
-    guid: f961c4bae0a33b043a89aeeb0b749c32
-  - enabled: 1
     path: Assets/---Scenes---/ApplicationPackage/00MainMenu.unity
     guid: bdc13cd19ba661f4898a08bacddfe727
   - enabled: 1
     path: Assets/---Scenes---/ApplicationPackage/01Game.unity
     guid: a94c65e80e6034947aa7e475313d27b3
+  - enabled: 1
+    path: Assets/---Scenes---/ApplicationPackage/AdwaiGameTest.unity
+    guid: 56167080518834944b8e98298d150048
+  - enabled: 1
+    path: Assets/---Scenes---/ApplicationPackage/ConnerGameTest.unity
+    guid: ef0d7d47a033ddd43b7080ed301af8e6
+  - enabled: 1
+    path: Assets/---Scenes---/ApplicationPackage/SidGameTest.unity
+    guid: 69bab4f1ab4a3b94e82ebcd34ff5f899
   m_configObjects:
     com.unity.adaptiveperformance.loader_settings: {fileID: 11400000, guid: 8d05d210e6116084b8ff15b40e336d37, type: 2}
     com.unity.adaptiveperformance.simulator.provider_settings: {fileID: 11400000, guid: 82a556f77e7a50f4fb47594f0042ac72, type: 2}

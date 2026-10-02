@@ -12,6 +12,14 @@ PrefabInstance:
       propertyPath: m_Name
       value: GameSceneEnvironment
       objectReference: {fileID: 0}
+    - target: {fileID: 2133117787049890841, guid: cda928bec01b97b45bd5d18fa3c5292e, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -5.62
+      objectReference: {fileID: 0}
+    - target: {fileID: 2133117787049890841, guid: cda928bec01b97b45bd5d18fa3c5292e, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 2
+      objectReference: {fileID: 0}
     - target: {fileID: 2525115233100382911, guid: cda928bec01b97b45bd5d18fa3c5292e, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
