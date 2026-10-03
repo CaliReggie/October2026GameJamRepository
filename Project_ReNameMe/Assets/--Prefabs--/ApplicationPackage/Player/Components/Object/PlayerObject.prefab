@@ -326,7 +326,7 @@ MonoBehaviour:
   cameraPositionGameObject: {fileID: 4354687094471891563}
   modelParentPositionGameObject: {fileID: 5396357791531452694}
   smallSquirrelData:
-    modelPrefab: {fileID: 7302382350045214854, guid: 1f18ae65f5c23cd41b4fa5396f797de1, type: 3}
+    modelGameObject: {fileID: 5081111043322228279}
     cameraModelLocation: {fileID: 8065286279235486172}
     modelParentLocation: {fileID: 2360412923605001719}
     colliderRadius: 0.07
@@ -338,7 +338,7 @@ MonoBehaviour:
     moveLerpGrounded: 1
     moveLerpAirborne: 0.2
   bigSquirrelData:
-    modelPrefab: {fileID: 7698556298634069608, guid: 56fa0d65083fd7d4bbd78103a29e9a8a, type: 3}
+    modelGameObject: {fileID: 4934275807933796329}
     cameraModelLocation: {fileID: 8547062537333077034}
     modelParentLocation: {fileID: 8415455923484659530}
     colliderRadius: 0.1
@@ -516,11 +516,11 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 7302382350045214854, guid: 1f18ae65f5c23cd41b4fa5396f797de1, type: 3}
       propertyPath: m_Name
-      value: SmSquirrelTesting
+      value: SmSquirrelModel
       objectReference: {fileID: 0}
     - target: {fileID: 7302382350045214854, guid: 1f18ae65f5c23cd41b4fa5396f797de1, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7934382267629478460, guid: 1f18ae65f5c23cd41b4fa5396f797de1, type: 3}
       propertyPath: m_LocalPosition.x
@@ -567,6 +567,11 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 1f18ae65f5c23cd41b4fa5396f797de1, type: 3}
+--- !u!1 &5081111043322228279 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 7302382350045214854, guid: 1f18ae65f5c23cd41b4fa5396f797de1, type: 3}
+  m_PrefabInstance: {fileID: 2581967334810834609}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &5604847651019912333 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 7934382267629478460, guid: 1f18ae65f5c23cd41b4fa5396f797de1, type: 3}
@@ -622,17 +627,22 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7698556298634069608, guid: 56fa0d65083fd7d4bbd78103a29e9a8a, type: 3}
       propertyPath: m_Name
-      value: BigSquirrelTesting
+      value: BigSquirrelModel
       objectReference: {fileID: 0}
     - target: {fileID: 7698556298634069608, guid: 56fa0d65083fd7d4bbd78103a29e9a8a, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 56fa0d65083fd7d4bbd78103a29e9a8a, type: 3}
+--- !u!1 &4934275807933796329 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 7698556298634069608, guid: 56fa0d65083fd7d4bbd78103a29e9a8a, type: 3}
+  m_PrefabInstance: {fileID: 3363297898012641665}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &5706554515050911059 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 7033800761697787090, guid: 56fa0d65083fd7d4bbd78103a29e9a8a, type: 3}

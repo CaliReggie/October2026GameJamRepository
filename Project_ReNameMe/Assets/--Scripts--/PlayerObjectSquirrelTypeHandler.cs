@@ -3,7 +3,7 @@ using UnityEngine.Serialization;
 
 [System.Serializable] public class PlayerObjectSpecificData
 {
-    public GameObject modelPrefab;
+    public GameObject modelGameObject;
     
     public Transform cameraModelLocation;
     
@@ -106,17 +106,25 @@ public class PlayerObjectSquirrelTypeHandler : MonoBehaviour
     
     private void UpdatePlayerObjectData(PlayerObjectSpecificData data)
     {
-        if (playerModel != null)
+        if (smallSquirrelData.modelGameObject != null)
         {
-            Destroy(playerModel);
+            smallSquirrelData.modelGameObject.gameObject.SetActive(false);
         }
+        if (bigSquirrelData.modelGameObject != null)
+        {
+            bigSquirrelData.modelGameObject.gameObject.SetActive(false);
+        }
+        
+        playerModel = data.modelGameObject;
+        
+        playerModel.transform.SetParent(modelParentPositionGameObject, true);
+        
+        playerModel.transform.localPosition = Vector3.zero;
         
         cameraPositionGameObject.position = data.cameraModelLocation.position;
         
         modelParentPositionGameObject.position = data.modelParentLocation.position;
         modelParentPositionGameObject.rotation = data.modelParentLocation.rotation;
-        
-        playerModel = Instantiate(data.modelPrefab, modelParentPositionGameObject.position, modelParentPositionGameObject.rotation, modelParentPositionGameObject);
         
         playerObjectPioComponent.RayCastRadius = data.colliderRadius;
         
@@ -133,5 +141,7 @@ public class PlayerObjectSquirrelTypeHandler : MonoBehaviour
         
         playerObjectPioComponent.MoveLerpGrounded = data.moveLerpGrounded;
         playerObjectPioComponent.MoveLerpAirborne = data.moveLerpAirborne;
+        
+        playerModel.gameObject.SetActive(true);
     }
 }
