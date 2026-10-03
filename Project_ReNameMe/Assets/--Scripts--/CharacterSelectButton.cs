@@ -2,6 +2,7 @@ using UnityEngine;
 using System;
 using System.Collections.Generic;
 using TMPro;
+using UnityEngine.UI;
 
 public class CharacterSelectButton : DeviceClickDetector
 {
@@ -24,10 +25,14 @@ public class CharacterSelectButton : DeviceClickDetector
     [Header("Dynamic")]
     
     [SerializeField] private int pairedVisualPlayerIndex = -1;
+    
+    [SerializeField] private Button button;
 
     private void Start()
     {
         PlayerManager.Instance.OnSquirrelCorrespondingPlayerVisualIndexesChanged += UpdatePairedPlayer;
+        
+        button = GetComponent<Button>();
     }
 
     private void OnEnable() 
@@ -153,10 +158,20 @@ public class CharacterSelectButton : DeviceClickDetector
             if (pairedVisualPlayerIndex != -1)
             {
                 pairedPlayerText.text = $"Player {pairedVisualPlayerIndex}";
+                
+                if (button != null)
+                {
+                    button.interactable = false;
+                }
             }
             else
             {
                 pairedPlayerText.text = "Unassigned";
+                
+                if (button != null)
+                {
+                    button.interactable = true;
+                }
             }
         }
     }
