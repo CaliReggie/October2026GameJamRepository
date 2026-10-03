@@ -52,6 +52,10 @@ public class PlayerObjectPioComponent : PioComponent
     
     
     private readonly int movingAnimatorHash = Animator.StringToHash("isMoving");
+    
+    private readonly int groundedAnimatorHash = Animator.StringToHash("isGrounded");
+    
+    private readonly int flippedAnimatorHash = Animator.StringToHash("flipped");
 
     [Header("Inscribed Settings")]
     
@@ -726,5 +730,7 @@ public class PlayerObjectPioComponent : PioComponent
         }
         
         currentState = toState;
+        
+        animator.SetBool(groundedAnimatorHash, isGrounded);
     }
 }
