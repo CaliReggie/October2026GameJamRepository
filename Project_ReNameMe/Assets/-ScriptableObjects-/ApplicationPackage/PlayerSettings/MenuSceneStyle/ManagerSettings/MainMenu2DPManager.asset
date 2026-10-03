@@ -12,7 +12,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8e0790f536c154de88e1070dca2e2b10, type: 3}
   m_Name: MainMenu2DPManager
   m_EditorClassIdentifier: 
-  writeChanges: 0
   targetPlayers: 2
   strictTargetPlayers: 0
   playersSettings:

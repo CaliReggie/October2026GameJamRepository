@@ -315,10 +315,6 @@ public class PlayerObjectPioComponent : PioComponent
             }
         }
         
-        //CHANGING FOR SQUIRREL HORIZONTAL CAPSULE, capsule is rotated 90 degrees on x axis,
-        //so we need to translate what would be forward standing up to what would be forward laying down forwards
-        targetSpawnEulerRotation = new Vector3(90f, targetSpawnEulerRotation.y, 0f);
-        
         // teleport to spawn point
         TpPlayerObject(targetSpawnPosition, targetSpawnEulerRotation, true, true);
         
@@ -402,11 +398,7 @@ public class PlayerObjectPioComponent : PioComponent
                     Vector3 moveRotationEulerAngles = Quaternion.LookRotation(orientedMoveInput).eulerAngles;
                     
                     // //lerp to target rotation for smoothness
-                    // targetEulerRotation = new Vector3(0f, Mathf.LerpAngle(targetEulerRotation.y, moveRotationEulerAngles.y, playerRotationEasing), 0f);
-                    
-                    //CHANGED FOR SQUIRREL HORIZONTAL CAPSULE, capsule is rotated 90 degrees on x axis,
-                    //so we need to rotate the player object 90 degrees on x axis as well
-                    targetEulerRotation = new Vector3(90f, Mathf.LerpAngle(targetEulerRotation.y, moveRotationEulerAngles.y, playerRotationEasing), 0f);
+                    targetEulerRotation = new Vector3(0f, Mathf.LerpAngle(targetEulerRotation.y, moveRotationEulerAngles.y, playerRotationEasing), 0f);
                 }
             }
             else
@@ -414,16 +406,10 @@ public class PlayerObjectPioComponent : PioComponent
                 // face look orientation dir
                 targetEulerRotation = Quaternion.LookRotation(CurrentLookOrientation.forward).eulerAngles;
                 
-                // targetEulerRotation = new Vector3(0f, targetEulerRotation.y, 0f);
-                
-                //CHANGED FOR SQUIRREL HORIZONTAL CAPSULE
-                targetEulerRotation = new Vector3(90f, targetEulerRotation.y, 0f);
+                targetEulerRotation = new Vector3(0f, targetEulerRotation.y, 0f);
             }
             
-            // playerObjectRigidbody.MoveRotation(Quaternion.Euler(0f, targetEulerRotation.y, 0f));
-            
-            //CHANGED FOR SQUIRREL HORIZONTAL CAPSULE
-            playerObjectRigidbody.MoveRotation(Quaternion.Euler(targetEulerRotation));
+            playerObjectRigidbody.MoveRotation(Quaternion.Euler(0f, targetEulerRotation.y, 0f));
         }
     }
 
@@ -476,14 +462,14 @@ public class PlayerObjectPioComponent : PioComponent
             // grounded check, can do other checks for things like slope in future here
             // isGrounded = Physics.SphereCast(rayOrigin, raycastRadius, Vector3.down, out _, distToBottom + extraRaycastDistance, groundedLayers);
             
-            //CHANGED FOR SQUIRREL HORIZONTAL CAPSULE
-            isGrounded = Physics.CapsuleCast (rayOrigin + Vector3.forward * playerObjectCollider.bounds.extents.x, rayOrigin - Vector3.forward * playerObjectCollider.bounds.extents.x, raycastRadius, Vector3.down, out _, distToBottom + extraRaycastDistance, groundedLayers);
+            //CHANGED FOR SQUIRREL HORIZONTAL CAPSULE..
+            isGrounded = Physics.CapsuleCast (rayOrigin + Vector3.forward * playerObjectCollider.bounds.extents.z, rayOrigin - Vector3.forward * playerObjectCollider.bounds.extents.z, raycastRadius, Vector3.down, out _, distToBottom + extraRaycastDistance, groundedLayers);
             
-            // debug raycast rays on bounds extents of player object collider
-            // Debug.DrawRay(rayOrigin + Vector3.forward * playerObjectCollider.bounds.extents.z, Vector3.down * (distToBottom + extraRaycastDistance), isGrounded ? Color.green : Color.red);
-            // Debug.DrawRay(rayOrigin - Vector3.forward * playerObjectCollider.bounds.extents.z, Vector3.down * (distToBottom + extraRaycastDistance), isGrounded ? Color.green : Color.red);
-            // Debug.DrawRay(rayOrigin + Vector3.right * playerObjectCollider.bounds.extents.x, Vector3.down * (distToBottom + extraRaycastDistance), isGrounded ? Color.green : Color.red);
-            // Debug.DrawRay(rayOrigin - Vector3.right * playerObjectCollider.bounds.extents.x , Vector3.down * (distToBottom + extraRaycastDistance), isGrounded ? Color.green : Color.red);
+            // debug raycast rays on bounds extents of player object collider // todo: comment
+            Debug.DrawRay(rayOrigin + Vector3.forward * playerObjectCollider.bounds.extents.z, Vector3.down * (distToBottom + extraRaycastDistance), isGrounded ? Color.green : Color.red);
+            Debug.DrawRay(rayOrigin - Vector3.forward * playerObjectCollider.bounds.extents.z, Vector3.down * (distToBottom + extraRaycastDistance), isGrounded ? Color.green : Color.red);
+            Debug.DrawRay(rayOrigin + Vector3.right * playerObjectCollider.bounds.extents.x, Vector3.down * (distToBottom + extraRaycastDistance), isGrounded ? Color.green : Color.red);
+            Debug.DrawRay(rayOrigin - Vector3.right * playerObjectCollider.bounds.extents.x , Vector3.down * (distToBottom + extraRaycastDistance), isGrounded ? Color.green : Color.red);
             
             if (debugMode)
             {

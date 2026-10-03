@@ -442,6 +442,12 @@ public class PlayerInputObject : BaseStateMachine<PlayerInputObject.EPlayerInput
     #region Variables, Properties, Fields, Events
     
     //ADDED FOR SQUIRREL GAME
+    public bool IsSmallSquirrel => PlayerManager.Instance != null &&
+                                   PlayerManager.Instance.SmallSquirrelCorrespondingPlayerVisualIndex == VisualIndex;
+    
+    public bool IsBigSquirrel => PlayerManager.Instance != null &&
+                                   PlayerManager.Instance.BigSquirrelCorrespondingPlayerVisualIndex == VisualIndex;
+    
     public int MouseId
     {
         get
