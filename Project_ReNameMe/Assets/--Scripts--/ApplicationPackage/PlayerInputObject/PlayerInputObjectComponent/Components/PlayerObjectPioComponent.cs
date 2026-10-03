@@ -58,6 +58,11 @@ public class PlayerObjectPioComponent : PioComponent
     [Tooltip("The speed and which player object will move when move controls are used.")]
     [SerializeField] private float walkSpeed = 4f;
     
+    //ADDED FOR SQUIRREL GAME. 
+    [SerializeField] private float moveLerpGrounded = 1f;
+    
+    [SerializeField] private float moveLerpAirborne = 0.1f;
+    
     [Tooltip("The real height the player will jump dependant on Physics gravity settings.")]
     [SerializeField] private float jumpHeight = 1.5f;
     
@@ -181,6 +186,11 @@ public class PlayerObjectPioComponent : PioComponent
     }
     
     public float WalkSpeed { get => walkSpeed; set => walkSpeed = value; }
+    
+    public float MoveLerpGrounded { get => moveLerpGrounded; set => moveLerpGrounded = value; }
+    
+    public float MoveLerpAirborne { get => moveLerpAirborne; set => moveLerpAirborne = value; }
+    
     public float JumpHeight { get => jumpHeight; set => jumpHeight = value; }
     
     public float PlayerRotationEasing { get => playerRotationEasing; set => playerRotationEasing = value; }
@@ -457,8 +467,19 @@ public class PlayerObjectPioComponent : PioComponent
         
         void ManageMove()
         {
-            playerObjectRigidbody.linearVelocity = targetMove;
+            // playerObjectRigidbody.linearVelocity = targetMove;
+            
+            // CHANGED FOR SUIRREL GAME. using physics forces.
+            Vector3 currentVelocity = playerObjectRigidbody.linearVelocity;
+            
+            Vector3 addedVelocity = new Vector3(targetMove.x - currentVelocity.x, 0f, targetMove.z - currentVelocity.z);
+            
+            Vector3 lerpedAdditionalVelocity = Vector3.Lerp(Vector3.zero, addedVelocity, isGrounded ? moveLerpGrounded : moveLerpAirborne);
+
+            playerObjectRigidbody.AddForce(lerpedAdditionalVelocity, ForceMode.VelocityChange);
+            
         }
+            
         
         void ManageRotation()
         {
@@ -593,8 +614,9 @@ public class PlayerObjectPioComponent : PioComponent
                 // use grav to calc jump height
                 // targetMove.y = Mathf.Sqrt(2f * jumpHeight * -Physics.gravity.y); 
                 
-                // use grav to calc jump height
-                targetMove.y = Mathf.Sqrt(2f * jumpHeight * -Physics.gravity.y);
+                // CHANGED FOR SQUIRREL GAME. using force instead of setting velocity directly
+                playerObjectRigidbody.AddForce(Vector3.up * Mathf.Sqrt(2f * jumpHeight
+                    * -Physics.gravity.y), ForceMode.VelocityChange);
             }
             else if (isGrounded)
             {

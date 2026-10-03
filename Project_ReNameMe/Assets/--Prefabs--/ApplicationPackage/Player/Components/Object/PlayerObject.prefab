@@ -238,7 +238,7 @@ Rigidbody:
     m_Bits: 0
   m_ImplicitCom: 1
   m_ImplicitTensor: 1
-  m_UseGravity: 0
+  m_UseGravity: 1
   m_IsKinematic: 0
   m_Interpolate: 0
   m_Constraints: 112
@@ -289,10 +289,13 @@ MonoBehaviour:
   groundedLayers:
     serializedVersion: 2
     m_Bits: 4225217
-  extraRaycastDistance: 0.01
-  groundedCheckYOffset: 0.01
-  walkSpeed: 2.5
-  jumpHeight: 1
+  raycastYOffset: 0.01
+  raycastRadius: 0.1
+  raycastExtraDistance: 0.01
+  walkSpeed: 4
+  moveLerpGrounded: 1
+  moveLerpAirborne: 0.1
+  jumpHeight: 1.5
   jumpBufferDuration: 0.2
   jumpCoyoteBufferDuration: 0.2
   playerRotationEasing: 0.25
@@ -332,6 +335,8 @@ MonoBehaviour:
     moveSpeed: 3.5
     jumpHeight: 1.5
     playerRotationEasing: 0.35
+    moveLerpGrounded: 1
+    moveLerpAirborne: 0.2
   bigSquirrelData:
     modelPrefab: {fileID: 7698556298634069608, guid: 56fa0d65083fd7d4bbd78103a29e9a8a, type: 3}
     cameraModelLocation: {fileID: 8547062537333077034}
@@ -341,7 +346,9 @@ MonoBehaviour:
     mass: 5
     moveSpeed: 2
     jumpHeight: 0.75
-    playerRotationEasing: 0.1
+    playerRotationEasing: 0.15
+    moveLerpGrounded: 0.75
+    moveLerpAirborne: 0.075
   playerObjectPioComponent: {fileID: 0}
   playerModel: {fileID: 0}
 --- !u!1 &3503289934305238904

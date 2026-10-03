@@ -20,6 +20,10 @@ using UnityEngine.Serialization;
     public float jumpHeight;
     
     [Range(0,1)] public float playerRotationEasing = 0.25f;
+
+    public float moveLerpGrounded = 1f;
+    
+    public float moveLerpAirborne = 0.2f;
 }
 
 public class PlayerObjectSquirrelTypeHandler : MonoBehaviour
@@ -126,5 +130,8 @@ public class PlayerObjectSquirrelTypeHandler : MonoBehaviour
         playerObjectPioComponent.JumpHeight = data.jumpHeight;
         
         playerObjectPioComponent.PlayerRotationEasing = data.playerRotationEasing;
+        
+        playerObjectPioComponent.MoveLerpGrounded = data.moveLerpGrounded;
+        playerObjectPioComponent.MoveLerpAirborne = data.moveLerpAirborne;
     }
 }
