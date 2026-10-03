@@ -20,7 +20,7 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: Waterfall
+  m_Name: WaterParticles
   m_Shader: {fileID: -6465566751694194690, guid: 0dee644f8147b26479f6b6b45125fa1e, type: 3}
   m_Parent: {fileID: 0}
   m_ModifiedSerializedProperties: 0
@@ -56,8 +56,8 @@ Material:
     - _QueueOffset: 0
     - _Vornonoi_Offset: 20
     - _VoronoiDensity: 9.3
-    - _WaveSpeed: 10
-    - _WaveStrength: 0.1
+    - _WaveSpeed: 0
+    - _WaveStrength: 0
     m_Colors:
     - _BottomBrightness: {r: 0, g: 1.54, b: 0, a: 0}
     - _Color: {r: 0.51886785, g: 0.9143189, b: 1, a: 0}
