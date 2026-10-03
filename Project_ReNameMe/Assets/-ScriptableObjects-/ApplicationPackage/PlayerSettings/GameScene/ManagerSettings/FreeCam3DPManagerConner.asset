@@ -1,0 +1,24 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8e0790f536c154de88e1070dca2e2b10, type: 3}
+  m_Name: FreeCam3DPManagerConner
+  m_EditorClassIdentifier: 
+  targetPlayers: 1
+  strictTargetPlayers: 1
+  playersSettings:
+  - {fileID: 11400000, guid: a8bcc3f47b140c34c8e0004ccf33b85a, type: 2}
+  - {fileID: 11400000, guid: 379ead1819b7b1544845faaf95aee23f, type: 2}
+  - {fileID: 11400000, guid: 11bc91b42fb8af24781a2a6854d42041, type: 2}
+  - {fileID: 11400000, guid: 13473d728d6d2df46abbac26f69257c4, type: 2}
+  allNeededToPauseTime: 1
+  forceConfigurationTypeMatch: 0
+  targetPlayerConfigurationType: 0

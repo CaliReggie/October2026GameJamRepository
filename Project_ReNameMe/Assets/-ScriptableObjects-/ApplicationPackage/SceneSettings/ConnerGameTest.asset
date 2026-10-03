@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   scenePath: Assets/---Scenes---/ApplicationPackage/ConnerGameTest.unity
   writeChanges: 0
-  playerManagerSettings: {fileID: 11400000, guid: 182bc3caedab00e40b40fa683f98b741, type: 2}
+  playerManagerSettings: {fileID: 11400000, guid: 9c2c339eeec15b2478434d0a12f08511, type: 2}
   constantId: 1
   chronologicalId: 1
   nameId: Level 1
