@@ -11,6 +11,10 @@ using UnityEngine.Serialization;
 
     public Animator animator;
     
+    public Transform heldObjectLocation;
+    
+    public Transform dropObjectLocation;
+    
     public float colliderRadius;
     
     public float colliderHeight;
@@ -45,6 +49,11 @@ public class PlayerObjectSquirrelTypeHandler : MonoBehaviour
     [SerializeField] private PlayerObjectPioComponent playerObjectPioComponent;
 
     [SerializeField] private GameObject playerModel;
+    
+    public PlayerObjectSpecificData CurrentPlayerObjectData =>
+        GetComponentInParent<PlayerInputObject>().VisualIndex == PlayerManager.Instance.SmallSquirrelAssignedPlayerVisualIndex
+            ? smallSquirrelData
+            : bigSquirrelData;
     
     private void Start()
     {

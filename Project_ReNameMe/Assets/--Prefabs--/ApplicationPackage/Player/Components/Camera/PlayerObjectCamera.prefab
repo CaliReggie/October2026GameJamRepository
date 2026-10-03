@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 391247167871013818}
   - component: {fileID: 6419132689307636665}
   - component: {fileID: 5546568426276779380}
+  - component: {fileID: 2910991989454862909}
   m_Layer: 6
   m_Name: PlayerObjectCamera
   m_TagString: Untagged
@@ -27,7 +28,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3847346578986444025}
   serializedVersion: 2
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0.7, z: 0.1}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -122,6 +123,7 @@ MonoBehaviour:
   m_ScreenCoordScaleBias: {x: 0, y: 0, z: 0, w: 0}
   m_RequiresDepthTexture: 0
   m_RequiresColorTexture: 0
+  m_Version: 2
   m_TaaSettings:
     m_Quality: 3
     m_FrameInfluence: 0.1
@@ -129,7 +131,6 @@ MonoBehaviour:
     m_MipBias: 0
     m_VarianceClampScale: 0.9
     m_ContrastAdaptiveSharpening: 0
-  m_Version: 2
 --- !u!114 &5546568426276779380
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -162,6 +163,31 @@ MonoBehaviour:
       m_PostInfinity: 2
       m_RotationOrder: 4
   CustomBlends: {fileID: 0}
+--- !u!114 &2910991989454862909
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3847346578986444025}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9fac061e06559874ab3236a5d8426f12, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  cameraObject: {fileID: 3847346578986444025}
+  playerObjectPio: {fileID: 0}
+  interactableLayerMask:
+    serializedVersion: 2
+    m_Bits: 134217728
+  interactRaycastDistance: 3
+  interactRaycastRadius: 0.1
+  maxDistanceFromObjectToInteract: 0.5
+  hoveringInteractable: {fileID: 0}
+  lastHoveringInteractable: {fileID: 0}
+  heldInteractable: {fileID: 0}
+  heldParentLocation: {fileID: 0}
+  dropLocation: {fileID: 0}
 --- !u!1 &6872738546687535088
 GameObject:
   m_ObjectHideFlags: 0
@@ -224,8 +250,6 @@ MeshRenderer:
   m_RayTracingAccelStructBuildFlagsOverride: 0
   m_RayTracingAccelStructBuildFlags: 1
   m_SmallMeshCulling: 1
-  m_ForceMeshLod: -1
-  m_MeshLodSelectionBias: 0
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -247,11 +271,9 @@ MeshRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_GlobalIlluminationMeshLod: 0
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_MaskInteraction: 0
   m_AdditionalVertexStreams: {fileID: 0}
 --- !u!65 &7242515866668289644
 BoxCollider:
