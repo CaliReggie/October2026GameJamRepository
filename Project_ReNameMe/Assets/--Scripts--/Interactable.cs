@@ -63,8 +63,6 @@ public class Interactable : MonoBehaviour
     
     protected virtual void BeHeld(Transform heldParentLocation)
     {
-        if ()
-        
         IsHeld = true;
         
         ToggleOutline(true);
