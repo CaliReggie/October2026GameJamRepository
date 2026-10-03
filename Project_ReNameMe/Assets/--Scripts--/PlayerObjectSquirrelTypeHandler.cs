@@ -14,6 +14,12 @@ using UnityEngine.Serialization;
     public float colliderHeight;
 
     public float mass;
+    
+    public float moveSpeed;
+    
+    public float jumpHeight;
+    
+    [Range(0,1)] public float playerRotationEasing = 0.25f;
 }
 
 public class PlayerObjectSquirrelTypeHandler : MonoBehaviour
@@ -30,27 +36,27 @@ public class PlayerObjectSquirrelTypeHandler : MonoBehaviour
     
     [Header("Dynamic")]
     
-    [SerializeField] private CapsuleCollider playerCollider;
-    
-    [SerializeField] private Rigidbody playerRigidbody;
+    [SerializeField] private PlayerObjectPioComponent playerObjectPioComponent;
 
     [SerializeField] private GameObject playerModel;
     
     private void Start()
     {
-        PlayerManager.Instance.OnSquirrelCorrespondingPlayerVisualIndexesChanged += UpdateSquirrelType;
+        playerObjectPioComponent = GetComponent<PlayerObjectPioComponent>();
         
-        playerCollider = GetComponent<CapsuleCollider>();
-        playerRigidbody = GetComponent<Rigidbody>();
-        
-        UpdateSquirrelType();
+        if (PlayerManager.Instance != null)
+        {
+            PlayerManager.Instance.OnCharacterAssignmentChanged += UpdateSquirrelType;
+            
+            UpdateSquirrelType();
+        }
     }
     
     private void OnDestroy() 
     {
         if (PlayerManager.Instance != null)
         {
-            PlayerManager.Instance.OnSquirrelCorrespondingPlayerVisualIndexesChanged -= UpdateSquirrelType;
+            PlayerManager.Instance.OnCharacterAssignmentChanged -= UpdateSquirrelType;
         }
     }
 
@@ -60,29 +66,33 @@ public class PlayerObjectSquirrelTypeHandler : MonoBehaviour
         {
             int playerVisualIndex = GetComponentInParent<PlayerInputObject>().VisualIndex;
             
-            if (playerVisualIndex == PlayerManager.Instance.SmallSquirrelCorrespondingPlayerVisualIndex)
+            if (playerVisualIndex == PlayerManager.Instance.SmallSquirrelAssignedPlayerVisualIndex)
             {
                 UpdatePlayerObjectData(smallSquirrelData);
             }
-            else if (playerVisualIndex == PlayerManager.Instance.BigSquirrelCorrespondingPlayerVisualIndex)
+            else if (playerVisualIndex == PlayerManager.Instance.BigSquirrelAssignedPlayerVisualIndex)
             {
                 UpdatePlayerObjectData(bigSquirrelData);
             }
-            else if (PlayerManager.Instance.SmallSquirrelCorrespondingPlayerVisualIndex == -1)
+            else if (GameManager.Instance != null) // starting in game scene with no pre assignment from mainmenu
             {
-                PlayerManager.Instance.SmallSquirrelCorrespondingPlayerVisualIndex = playerVisualIndex;
+                if (PlayerManager.Instance.SmallSquirrelAssignedPlayerVisualIndex == -1)
+                {
+                    PlayerManager.Instance.SmallSquirrelAssignedPlayerVisualIndex = playerVisualIndex;
+                }
+                else if (PlayerManager.Instance.BigSquirrelAssignedPlayerVisualIndex == -1)
+                {
+                    PlayerManager.Instance.BigSquirrelAssignedPlayerVisualIndex = playerVisualIndex;
+                }
+                else
+                {
+                    Debug.LogError($"Player visual index {playerVisualIndex} does not correspond to any squirrel type." +
+                                     $" Defaulting to small squirrel data.");
+                    
+                    UpdatePlayerObjectData(smallSquirrelData);
+                }
             }
-            else if (PlayerManager.Instance.BigSquirrelCorrespondingPlayerVisualIndex == -1)
-            {
-                PlayerManager.Instance.BigSquirrelCorrespondingPlayerVisualIndex = playerVisualIndex;
-            }
-            else
-            {
-                Debug.LogError($"Player visual index {playerVisualIndex} does not correspond to any squirrel type." +
-                                 $" Defaulting to small squirrel data.");
-                
-                UpdatePlayerObjectData(smallSquirrelData);
-            }
+            
         }
         catch (System.Exception e)
         {
@@ -104,9 +114,17 @@ public class PlayerObjectSquirrelTypeHandler : MonoBehaviour
         
         playerModel = Instantiate(data.modelPrefab, modelParentPositionGameObject.position, modelParentPositionGameObject.rotation, modelParentPositionGameObject);
         
-        playerCollider.radius = data.colliderRadius;
-        playerCollider.height = data.colliderHeight;
+        playerObjectPioComponent.RayCastRadius = data.colliderRadius;
         
-        playerRigidbody.mass = data.mass;
+        playerObjectPioComponent.ColliderRadius = data.colliderRadius;
+        playerObjectPioComponent.ColliderHeight = data.colliderHeight;
+        
+        playerObjectPioComponent.RigidbodyMass = data.mass;
+        
+        playerObjectPioComponent.WalkSpeed = data.moveSpeed;
+        
+        playerObjectPioComponent.JumpHeight = data.jumpHeight;
+        
+        playerObjectPioComponent.PlayerRotationEasing = data.playerRotationEasing;
     }
 }

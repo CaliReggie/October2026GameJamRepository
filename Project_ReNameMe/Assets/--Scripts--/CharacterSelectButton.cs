@@ -24,27 +24,44 @@ public class CharacterSelectButton : DeviceClickDetector
     
     [Header("Dynamic")]
     
-    [SerializeField] private int pairedVisualPlayerIndex = -1;
+    [SerializeField] private int assignedVisualPlayerIndex = -1;
     
     [SerializeField] private Button button;
+    
 
     private void Start()
     {
-        PlayerManager.Instance.OnSquirrelCorrespondingPlayerVisualIndexesChanged += UpdatePairedPlayer;
-        
         button = GetComponent<Button>();
+        
+        if (PlayerManager.Instance != null)
+        {
+            PlayerManager.Instance.OnCharacterAssignmentChanged += UpdatePairedPlayer;
+        }
     }
 
     private void OnEnable() 
     {
-        PlayerManager.Instance.SmallSquirrelCorrespondingPlayerVisualIndex = -1;
-        PlayerManager.Instance.BigSquirrelCorrespondingPlayerVisualIndex = -1; }
+        if (PlayerManager.Instance != null)
+        {
+            switch (selectOptionType)
+            {
+                case ECharacterSelectOptionType.SmallSquirrel:
+                    PlayerManager.Instance.SmallSquirrelAssignedPlayerVisualIndex = -1;
+                    break;
+                case ECharacterSelectOptionType.BigSquirrel:
+                    PlayerManager.Instance.BigSquirrelAssignedPlayerVisualIndex = -1;
+                    break;
+                default:
+                    break;
+            }
+        }
+    }
     
     private void OnDestroy() 
     {
         if (PlayerManager.Instance != null)
         {
-            PlayerManager.Instance.OnSquirrelCorrespondingPlayerVisualIndexesChanged -= UpdatePairedPlayer;
+            PlayerManager.Instance.OnCharacterAssignmentChanged -= UpdatePairedPlayer;
         }
     }
     
@@ -58,24 +75,26 @@ public class CharacterSelectButton : DeviceClickDetector
                 {
                     int clickingPlayerVisualIndex = i;
                     
-                    if (CheckIfSelectOptionAvailableForId(clickingPlayerVisualIndex))
+                    Debug.Log($"Player {clickingPlayerVisualIndex} id {pointerId}.");
+                    
+                    if (CheckIfSelectOptionAvailableForVisualIndex(clickingPlayerVisualIndex))
                     {
                         switch (selectOptionType)
                         {
                             case ECharacterSelectOptionType.SmallSquirrel:
-                                PlayerManager.Instance.SmallSquirrelCorrespondingPlayerVisualIndex = clickingPlayerVisualIndex;
+                                PlayerManager.Instance.SmallSquirrelAssignedPlayerVisualIndex = clickingPlayerVisualIndex;
                                 break;
                             case ECharacterSelectOptionType.BigSquirrel:
-                                PlayerManager.Instance.BigSquirrelCorrespondingPlayerVisualIndex = clickingPlayerVisualIndex;
+                                PlayerManager.Instance.BigSquirrelAssignedPlayerVisualIndex = clickingPlayerVisualIndex;
                                 break;
                             default:
-                                if (clickingPlayerVisualIndex == PlayerManager.Instance.SmallSquirrelCorrespondingPlayerVisualIndex)
+                                if (clickingPlayerVisualIndex == PlayerManager.Instance.SmallSquirrelAssignedPlayerVisualIndex)
                                 {
-                                    PlayerManager.Instance.SmallSquirrelCorrespondingPlayerVisualIndex = -1;
+                                    PlayerManager.Instance.SmallSquirrelAssignedPlayerVisualIndex = -1;
                                 }
-                                if (clickingPlayerVisualIndex == PlayerManager.Instance.BigSquirrelCorrespondingPlayerVisualIndex)
+                                if (clickingPlayerVisualIndex == PlayerManager.Instance.BigSquirrelAssignedPlayerVisualIndex)
                                 {
-                                    PlayerManager.Instance.BigSquirrelCorrespondingPlayerVisualIndex = -1;
+                                    PlayerManager.Instance.BigSquirrelAssignedPlayerVisualIndex = -1;
                                 }
                                 break;
                         }
@@ -91,12 +110,18 @@ public class CharacterSelectButton : DeviceClickDetector
         }
     }
     
-    private bool CheckIfSelectOptionAvailableForId(int pointerId)
+    private bool CheckIfSelectOptionAvailableForVisualIndex(int visualIndex)
     {
-        // checking others for already paired to pointerid
+        // checking self availability / pairing
+        if (assignedVisualPlayerIndex != -1)
+        {
+            return false;
+        }
+        
+        // checking others for already paired to visualIndex
         foreach (CharacterSelectButton otherButton in buttonGroup)
         {
-            if (otherButton != null && otherButton != this && otherButton.pairedVisualPlayerIndex == pointerId)
+            if (otherButton != null && otherButton != this && otherButton.assignedVisualPlayerIndex == visualIndex)
             {
                 switch (selectOptionType)
                 {
@@ -116,21 +141,22 @@ public class CharacterSelectButton : DeviceClickDetector
             }
         }
         
-        // checking self for already paired to any id
-        if (pairedVisualPlayerIndex != -1)
-        {
-            return false;
-        }
 
         // checking general availability / pairing in management
         switch (selectOptionType)
         {
             case ECharacterSelectOptionType.SmallSquirrel:
-                if (PlayerManager.Instance.SmallSquirrelCorrespondingPlayerVisualIndex == -1) return true;
+                if (PlayerManager.Instance.SmallSquirrelAssignedPlayerVisualIndex == -1)
+                {
+                    return true;
+                }
                 return false;
             
             case ECharacterSelectOptionType.BigSquirrel:
-                if (PlayerManager.Instance.BigSquirrelCorrespondingPlayerVisualIndex == -1) return true;
+                if (PlayerManager.Instance.BigSquirrelAssignedPlayerVisualIndex == -1)
+                {
+                    return true;
+                }
                 return false;
                 
             default:
@@ -143,35 +169,38 @@ public class CharacterSelectButton : DeviceClickDetector
         switch (selectOptionType)
         {
             case ECharacterSelectOptionType.SmallSquirrel:
-                pairedVisualPlayerIndex = PlayerManager.Instance.SmallSquirrelCorrespondingPlayerVisualIndex;
+                assignedVisualPlayerIndex = PlayerManager.Instance.SmallSquirrelAssignedPlayerVisualIndex;
                 break;
             case ECharacterSelectOptionType.BigSquirrel:
-                pairedVisualPlayerIndex = PlayerManager.Instance.BigSquirrelCorrespondingPlayerVisualIndex;
+                assignedVisualPlayerIndex = PlayerManager.Instance.BigSquirrelAssignedPlayerVisualIndex;
                 break;
             default:
-                pairedVisualPlayerIndex = -1;
+                assignedVisualPlayerIndex = -1;
                 break;
         }
         
-        if (pairedPlayerText != null)
+        if (assignedVisualPlayerIndex != -1)
         {
-            if (pairedVisualPlayerIndex != -1)
+            if (pairedPlayerText != null)
             {
-                pairedPlayerText.text = $"Player {pairedVisualPlayerIndex}";
-                
-                if (button != null)
-                {
-                    button.interactable = false;
-                }
+                pairedPlayerText.text = $"Player {assignedVisualPlayerIndex}";
             }
-            else
+            
+            if (button != null)
+            {
+                button.interactable = false;
+            }
+        }
+        else
+        {
+            if (pairedPlayerText != null)
             {
                 pairedPlayerText.text = "Unassigned";
-                
-                if (button != null)
-                {
-                    button.interactable = true;
-                }
+            }
+            
+            if (button != null)
+            {
+                button.interactable = true;
             }
         }
     }

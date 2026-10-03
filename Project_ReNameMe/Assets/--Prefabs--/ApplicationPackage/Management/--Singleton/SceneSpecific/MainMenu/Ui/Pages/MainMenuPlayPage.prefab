@@ -301,8 +301,9 @@ GameObject:
   - component: {fileID: 2745326912304474048}
   - component: {fileID: 9083906972335208587}
   - component: {fileID: 4726506063299658627}
+  - component: {fileID: 4079272548709906233}
   m_Layer: 5
-  m_Name: GameButton
+  m_Name: StartButton
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -443,6 +444,18 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 6f33f32e53fdb224bbc9a753a095e103, type: 2}
   targetChronologicalId: 1
   button: {fileID: 0}
+--- !u!114 &4079272548709906233
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2032766881545070232}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f455ac2946a3ba84ca373531c76c6458, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &2134057123620690246
 GameObject:
   m_ObjectHideFlags: 0
@@ -864,7 +877,9 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Game
+  m_text: 'Start
+
+'
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -1369,6 +1384,7 @@ MonoBehaviour:
   - {fileID: 7141920545004550910}
   pairedPlayerText: {fileID: 1832599362101789000}
   pairedVisualPlayerIndex: -1
+  button: {fileID: 0}
 --- !u!1 &6363607121110455547
 GameObject:
   m_ObjectHideFlags: 0
@@ -1528,6 +1544,7 @@ MonoBehaviour:
   - {fileID: 7141920545004550910}
   pairedPlayerText: {fileID: 4160312682448268228}
   pairedVisualPlayerIndex: -1
+  button: {fileID: 0}
 --- !u!1 &7571699178855713471
 GameObject:
   m_ObjectHideFlags: 0
@@ -1960,6 +1977,7 @@ MonoBehaviour:
   - {fileID: 7141920545004550910}
   pairedPlayerText: {fileID: 0}
   pairedVisualPlayerIndex: -1
+  button: {fileID: 0}
 --- !u!1 &7645847176249515903
 GameObject:
   m_ObjectHideFlags: 0

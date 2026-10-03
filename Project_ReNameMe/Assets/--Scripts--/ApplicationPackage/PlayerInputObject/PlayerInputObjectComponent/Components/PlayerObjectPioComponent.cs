@@ -33,28 +33,33 @@ public class PlayerObjectPioComponent : PioComponent
     
     [Tooltip("The Rigidbody of the playerObject, used for movement and physics interactions.")]
     [SerializeField] private Rigidbody playerObjectRigidbody;
+    
 
     [Tooltip("The Collider of the playerObject, used for physics interactions and raycast detection.")]
-    [SerializeField] private Collider playerObjectCollider;
+    [SerializeField] private CapsuleCollider playerObjectCollider;
 
     [Tooltip("The physics layers to count as grounded for the player object when checking if grounded with raycasts.")]
     [SerializeField] private LayerMask groundedLayers;
     
-    [Tooltip("The extra distance from the bottom of the player object collider that the raycast will check for grounded.")]
-    [SerializeField] private float extraRaycastDistance = 0.05f;
+    [SerializeField]
+    private float raycastYOffset = 0.01f; // todo; this and below good change for base?
     
     [Tooltip("The radius of the spherecast to check for grounded.")]
     [SerializeField] private float raycastRadius = 0.1f;
+    
+    [Tooltip("The extra distance from the bottom of the player object collider that the raycast will check for grounded.")]
+    [SerializeField] private float raycastExtraDistance = 0.01f;
+    
     
     private readonly int movingAnimatorHash = Animator.StringToHash("isMoving");
 
     [Header("Inscribed Settings")]
     
     [Tooltip("The speed and which player object will move when move controls are used.")]
-    [SerializeField] private float walkSpeed = 5f;
+    [SerializeField] private float walkSpeed = 4f;
     
     [Tooltip("The real height the player will jump dependant on Physics gravity settings.")]
-    [SerializeField] private float jumpHeight = 2f;
+    [SerializeField] private float jumpHeight = 1.5f;
     
     [Tooltip("The time after pressing jump that playerObject will still attempt to jump (for jump forgiveness in air)")]
     [SerializeField] private float jumpBufferDuration = 0.2f;
@@ -63,7 +68,7 @@ public class PlayerObjectPioComponent : PioComponent
     [SerializeField] private float jumpCoyoteBufferDuration = 0.2f;
     
     [Tooltip("The speed at which the player object will rotate towards target move when in a non-fixed player camera.")]
-    [SerializeField] [Range(0,1)] private float playerRotationEasing = 0.1f;
+    [SerializeField] [Range(0,1)] private float playerRotationEasing = 0.2f;
     
     [Header("Dynamic References - Don't Modify In Inspector")]
     
@@ -104,6 +109,81 @@ public class PlayerObjectPioComponent : PioComponent
     
     [Tooltip("The time left that the player can still attempt to jump if not grounded.")]
     [SerializeField] private float jumpCoyoteBufferTimer;
+    
+    //ADDED FOR SQUIRREL GAME
+    public float RayCastRadius
+    {
+        get => raycastRadius;
+        set => raycastRadius = value;
+    }
+    
+    public float ColliderRadius
+    {
+        get
+        {
+            if (playerObjectCollider == null)
+            {
+                Debug.LogError($"{GetType().Name}: playerObjectCollider is null.");
+            }
+            return playerObjectCollider != null ? playerObjectCollider.radius : 1f;
+        }
+        set
+        {
+            if (playerObjectCollider == null)
+            {
+                Debug.LogError($"{GetType().Name}: playerObjectCollider is null.");
+                return;
+            }
+            playerObjectCollider.radius = value;
+        }
+    }
+    
+    public float ColliderHeight
+    {
+        get
+        {
+            if (playerObjectCollider == null)
+            {
+                Debug.LogError($"{GetType().Name}: playerObjectCollider is null.");
+            }
+            return playerObjectCollider != null ? playerObjectCollider.height : 1f;
+        }
+        set
+        {
+            if (playerObjectCollider == null)
+            {
+                Debug.LogError($"{GetType().Name}: playerObjectCollider is null.");
+                return;
+            }
+            playerObjectCollider.height = value;
+        }
+    }
+    
+    public float RigidbodyMass
+    {
+        get
+        {
+            if (playerObjectRigidbody == null)
+            {
+                Debug.LogError($"{GetType().Name}: playerObjectRigidbody is null.");
+            }
+            return playerObjectRigidbody != null ? playerObjectRigidbody.mass : 1f;
+        }
+        set
+        {
+            if (playerObjectRigidbody == null)
+            {
+                Debug.LogError($"{GetType().Name}: playerObjectRigidbody is null.");
+                return;
+            }
+            playerObjectRigidbody.mass = value;
+        }
+    }
+    
+    public float WalkSpeed { get => walkSpeed; set => walkSpeed = value; }
+    public float JumpHeight { get => jumpHeight; set => jumpHeight = value; }
+    
+    public float PlayerRotationEasing { get => playerRotationEasing; set => playerRotationEasing = value; }
     
     /// <summary>
     /// True if grounded and jump requested within jump buffer time,
@@ -452,7 +532,7 @@ public class PlayerObjectPioComponent : PioComponent
         void ManageGrounded()
         {
             // raycasting down from bottom bounds of player object collider to check if grounded
-            Vector3 rayOrigin = playerObjectCollider.bounds.center;
+            Vector3 rayOrigin = playerObjectCollider.bounds.center + Vector3.up * raycastYOffset;
             
             // float distToBottom = playerObjectCollider.bounds.extents.y;
             
@@ -460,20 +540,20 @@ public class PlayerObjectPioComponent : PioComponent
             float distToBottom = playerObjectCollider.bounds.extents.x / 2;
             
             // grounded check, can do other checks for things like slope in future here
-            // isGrounded = Physics.SphereCast(rayOrigin, raycastRadius, Vector3.down, out _, distToBottom + extraRaycastDistance, groundedLayers);
+            // isGrounded = Physics.SphereCast(rayOrigin, raycastRadius, Vector3.down, out _, distToBottom + raycastExtraDistance, groundedLayers);
             
-            //CHANGED FOR SQUIRREL HORIZONTAL CAPSULE..
-            isGrounded = Physics.CapsuleCast (rayOrigin + Vector3.forward * playerObjectCollider.bounds.extents.z, rayOrigin - Vector3.forward * playerObjectCollider.bounds.extents.z, raycastRadius, Vector3.down, out _, distToBottom + extraRaycastDistance, groundedLayers);
+            //CHANGED FOR SQUIRREL HORIZONTAL CAPSULE..todo: good change for base?
+            isGrounded = Physics.CapsuleCast (rayOrigin + Vector3.forward * playerObjectCollider.bounds.extents.z, rayOrigin - Vector3.forward * playerObjectCollider.bounds.extents.z, raycastRadius, Vector3.down, out _, distToBottom + raycastExtraDistance, groundedLayers);
             
             // debug raycast rays on bounds extents of player object collider // todo: comment
-            Debug.DrawRay(rayOrigin + Vector3.forward * playerObjectCollider.bounds.extents.z, Vector3.down * (distToBottom + extraRaycastDistance), isGrounded ? Color.green : Color.red);
-            Debug.DrawRay(rayOrigin - Vector3.forward * playerObjectCollider.bounds.extents.z, Vector3.down * (distToBottom + extraRaycastDistance), isGrounded ? Color.green : Color.red);
-            Debug.DrawRay(rayOrigin + Vector3.right * playerObjectCollider.bounds.extents.x, Vector3.down * (distToBottom + extraRaycastDistance), isGrounded ? Color.green : Color.red);
-            Debug.DrawRay(rayOrigin - Vector3.right * playerObjectCollider.bounds.extents.x , Vector3.down * (distToBottom + extraRaycastDistance), isGrounded ? Color.green : Color.red);
+            Debug.DrawRay(rayOrigin + Vector3.forward * playerObjectCollider.bounds.extents.z, Vector3.down * (distToBottom + raycastExtraDistance), isGrounded ? Color.green : Color.red);
+            Debug.DrawRay(rayOrigin - Vector3.forward * playerObjectCollider.bounds.extents.z, Vector3.down * (distToBottom + raycastExtraDistance), isGrounded ? Color.green : Color.red);
+            Debug.DrawRay(rayOrigin + Vector3.right * playerObjectCollider.bounds.extents.x, Vector3.down * (distToBottom + raycastExtraDistance), isGrounded ? Color.green : Color.red);
+            Debug.DrawRay(rayOrigin - Vector3.right * playerObjectCollider.bounds.extents.x , Vector3.down * (distToBottom + raycastExtraDistance), isGrounded ? Color.green : Color.red);
             
             if (debugMode)
             {
-                Debug.DrawRay(rayOrigin, Vector3.down * (distToBottom + extraRaycastDistance), isGrounded ? Color.green : Color.red);
+                Debug.DrawRay(rayOrigin, Vector3.down * (distToBottom + raycastExtraDistance), isGrounded ? Color.green : Color.red);
             }
             
             // if just left grounded, start coyote timer
@@ -511,7 +591,10 @@ public class PlayerObjectPioComponent : PioComponent
                 jumpBufferTimer = 0f;
                 jumpCoyoteBufferTimer = 0f;
                 // use grav to calc jump height
-                targetMove.y = Mathf.Sqrt(2f * jumpHeight * -Physics.gravity.y); 
+                // targetMove.y = Mathf.Sqrt(2f * jumpHeight * -Physics.gravity.y); 
+                
+                // use grav to calc jump height
+                targetMove.y = Mathf.Sqrt(2f * jumpHeight * -Physics.gravity.y);
             }
             else if (isGrounded)
             {

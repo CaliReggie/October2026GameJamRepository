@@ -741,33 +741,36 @@ public class PlayerManager : BaseStateManagerApplicationListener<PlayerManager, 
     #region Variables, Properties, Fields, Events
     
     //ADDED FOR SQUIRREL GAME
-    private int smallSquirrelCorrespondingPlayerVisualIndex = -1;
-    public int SmallSquirrelCorrespondingPlayerVisualIndex {
+    private int smallSquirrelAssignedPlayerVisualIndex = -1;
+    public int SmallSquirrelAssignedPlayerVisualIndex {
         get
         {
-            return smallSquirrelCorrespondingPlayerVisualIndex;
+            return smallSquirrelAssignedPlayerVisualIndex;
         }
         set
         {
-            smallSquirrelCorrespondingPlayerVisualIndex = value;
-            OnSquirrelCorrespondingPlayerVisualIndexesChanged?.Invoke();
+            smallSquirrelAssignedPlayerVisualIndex = value;
+            OnCharacterAssignmentChanged?.Invoke();
         }
     }
     
-    private int bigSquirrelCorrespondingPlayerVisualIndex = -1;
-    public int BigSquirrelCorrespondingPlayerVisualIndex {
+    private int bigSquirrelAssignedPlayerVisualIndex = -1;
+    public int BigSquirrelAssignedPlayerVisualIndex {
         get
         {
-            return bigSquirrelCorrespondingPlayerVisualIndex;
+            return bigSquirrelAssignedPlayerVisualIndex;
         }
         set
         {
-            bigSquirrelCorrespondingPlayerVisualIndex = value;
-            OnSquirrelCorrespondingPlayerVisualIndexesChanged?.Invoke();
+            bigSquirrelAssignedPlayerVisualIndex = value;
+            OnCharacterAssignmentChanged?.Invoke();
         }
     }
 
-    public event Action OnSquirrelCorrespondingPlayerVisualIndexesChanged;
+    public event Action OnCharacterAssignmentChanged;
+    
+    public bool CharactersAssigned => SmallSquirrelAssignedPlayerVisualIndex != -1
+                                      && BigSquirrelAssignedPlayerVisualIndex != -1;
     
     /// <summary>
     /// The current PlayerManagerSettingsSo in use by the PlayerManager.

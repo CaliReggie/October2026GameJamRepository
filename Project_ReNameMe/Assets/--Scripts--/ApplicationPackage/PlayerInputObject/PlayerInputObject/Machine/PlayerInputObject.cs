@@ -443,10 +443,10 @@ public class PlayerInputObject : BaseStateMachine<PlayerInputObject.EPlayerInput
     
     //ADDED FOR SQUIRREL GAME
     public bool IsSmallSquirrel => PlayerManager.Instance != null &&
-                                   PlayerManager.Instance.SmallSquirrelCorrespondingPlayerVisualIndex == VisualIndex;
+                                   PlayerManager.Instance.SmallSquirrelAssignedPlayerVisualIndex == VisualIndex;
     
     public bool IsBigSquirrel => PlayerManager.Instance != null &&
-                                   PlayerManager.Instance.BigSquirrelCorrespondingPlayerVisualIndex == VisualIndex;
+                                   PlayerManager.Instance.BigSquirrelAssignedPlayerVisualIndex == VisualIndex;
     
     public int MouseId
     {
