@@ -1,0 +1,76 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2efbdced89e9a90458959f9105eb3295, type: 3}
+  m_Name: AdwaiBlockout
+  m_EditorClassIdentifier: 
+  scenePath: Assets/---Scenes---/ApplicationPackage/01Game.unity
+  writeChanges: 0
+  playerManagerSettings: {fileID: 11400000, guid: 182bc3caedab00e40b40fa683f98b741, type: 2}
+  constantId: 1
+  chronologicalId: 1
+  nameId: Level 1
+  transitionInStyle: 1
+  transitionInCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    - serializedVersion: 3
+      time: 1
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  transitionInDuration: 0.75
+  uncoveredColor: {r: 0, g: 0, b: 0, a: 0}
+  transitionOutStyle: 0
+  transitionOutCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    - serializedVersion: 3
+      time: 1
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  transitionOutDuration: 0.75
+  coveredColor: {r: 0, g: 0, b: 0, a: 1}
+  targetFrameRate: 90
+  targetAspectRatio: 1.7777778
