@@ -116,6 +116,8 @@ public class PlayerObjectPioComponent : PioComponent
     [SerializeField] private float jumpCoyoteBufferTimer;
     
     //ADDED FOR SQUIRREL GAME
+    public Animator Animator { get => animator; set => animator = value; }
+    
     public float RayCastRadius
     {
         get => raycastRadius;

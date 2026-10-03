@@ -8,6 +8,8 @@ using UnityEngine.Serialization;
     public Transform cameraModelLocation;
     
     public Transform modelParentLocation;
+
+    public Animator animator;
     
     public float colliderRadius;
     
@@ -125,6 +127,8 @@ public class PlayerObjectSquirrelTypeHandler : MonoBehaviour
         
         modelParentPositionGameObject.position = data.modelParentLocation.position;
         modelParentPositionGameObject.rotation = data.modelParentLocation.rotation;
+        
+        playerObjectPioComponent.Animator = data.animator;
         
         playerObjectPioComponent.RayCastRadius = data.colliderRadius;
         
