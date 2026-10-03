@@ -248,6 +248,9 @@ public class PlayerObjectPioComponent : PioComponent
         }
     }
     
+    //ADDED FOR SQUIRREL GAME
+    public void GetHitByTrap(){}
+    
     /// <summary>
     /// Teleports the player object to the target location. Optionally also rotates to match target Euler rotation.
     /// </summary>

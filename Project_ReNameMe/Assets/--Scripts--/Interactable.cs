@@ -2,7 +2,16 @@ using UnityEngine;
 
 public class Interactable : MonoBehaviour
 {
+    public enum EInteractableType
+    {
+        PickupDropOnly,
+        PickupUseDrop,
+        UseOnly
+    }
+    
     [Header("Inscribed")]
+    
+    [SerializeField] private EInteractableType interactableType;
 
     [SerializeField] private Outline outline;
     
@@ -13,6 +22,14 @@ public class Interactable : MonoBehaviour
     [SerializeField] private bool isDynamicLoose = true;
     
     [SerializeField] private bool isDynamicHeld;
+
+    [Header("Dynamic")]
+    
+    [SerializeField] private int numHovering;
+    
+    [field: SerializeField] public bool IsHeld { get; private set; }
+    
+    public EInteractableType InteractableType => interactableType;
     
     protected virtual void Start()
     {
@@ -46,6 +63,12 @@ public class Interactable : MonoBehaviour
     
     protected virtual void BeHeld(Transform heldParentLocation)
     {
+        if ()
+        
+        IsHeld = true;
+        
+        ToggleOutline(true);
+        
         if (col != null)
         {
             col.enabled = false;
@@ -60,6 +83,10 @@ public class Interactable : MonoBehaviour
     
     protected virtual void BeDropped(Transform dropPosition = null, Vector3 throwVelocity = default)
     {
+        IsHeld = false;
+        
+        ToggleOutline(false);
+        
         if (col != null)
         {
             col.enabled = true;
@@ -69,41 +96,44 @@ public class Interactable : MonoBehaviour
         
         if (dropPosition != null)
         {
-            if (rb != null)
-            { 
-                //using rb.move position and rotation
-                rb.MovePosition(dropPosition.position);
-                
-                rb.MoveRotation(dropPosition.rotation);
-                
-                if (throwVelocity != Vector3.zero)
-                {
-                    rb.AddForce(throwVelocity, ForceMode.VelocityChange);
-                }
-            }
-            else
-            {
-                transform.position = dropPosition.position;
+            // moving to drop position before applying throw velocity to avoid unwanted physics behavior
+            transform.position = dropPosition.position;
             
-                transform.rotation = dropPosition.rotation;
+            transform.rotation = dropPosition.rotation;
+            
+            if (throwVelocity != Vector3.zero)
+            {
+                rb.AddForce(throwVelocity, ForceMode.VelocityChange);
             }
         }
     }
     
     public virtual void StartHover()
     {
+        numHovering++;
+        
         ToggleOutline(true);
     }
     
     public virtual void EndHover()
     {
+        
+        numHovering--;
+        
+        if (numHovering < 0)
+        {
+            numHovering = 0;
+        }
+        else if (numHovering > 0 || IsHeld)
+        {
+            return;
+        }
+        
         ToggleOutline(false);
     }
     
     public virtual void StartInteract(Transform heldParentLocation)
     { 
-        ToggleOutline(true);
-        
        ToggleDynamic(isDynamicHeld);
        
        BeHeld(heldParentLocation);
@@ -111,8 +141,6 @@ public class Interactable : MonoBehaviour
 
     public virtual void EndInteract(Transform dropPosition = null, Vector3 throwVelocity = default)
     {
-        ToggleOutline(false);
-
         ToggleDynamic(isDynamicLoose);
         
         BeDropped(dropPosition, throwVelocity);
