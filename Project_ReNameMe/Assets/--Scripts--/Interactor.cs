@@ -83,11 +83,10 @@ public class Interactor : MonoBehaviour
                     // lastly, use the hovering interactable with the holding interactable,
                     if (heldInteractable != null && heldInteractable.InteractableType == Interactable.EInteractableType.PickupUseDrop)
                     {
-                        // // Assuming the held interactable has a method to check if it can be used on the hovering interactable
-                        // if (heldInteractable.CanUseOn(hoveringInteractable))
-                        // {
-                        //     heldInteractable.UseOn(hoveringInteractable);
-                        // }
+                        if (Interactable.CanUseUseOnInteractable(hoveringInteractable, heldInteractable))
+                        {
+                            hoveringInteractable.Use();
+                        }
                     }
                     break;
             }
