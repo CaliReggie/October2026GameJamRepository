@@ -159,6 +159,8 @@ public class PlayerObjectSquirrelTypeHandler : MonoBehaviour
         
         playerObjectPioComponent.BaseHealth = data.health;
         
+        playerObjectPioComponent.HealForHealth(data.health);
+        
         playerModel.gameObject.SetActive(true);
     }
 }

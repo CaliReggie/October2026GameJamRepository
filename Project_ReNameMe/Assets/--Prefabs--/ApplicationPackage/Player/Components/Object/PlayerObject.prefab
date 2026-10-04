@@ -348,7 +348,7 @@ MonoBehaviour:
   isLockedInPlace: 0
   wasLockedInPlace: 0
   maximumLockedInPlaceInteractionAngle: 75
-  lockedInPlaceBounceHeight: 3
+  lockedInPlaceBounceHeight: 2
   <BaseHealth>k__BackingField: 1
   currentHealth: 0
   healthRegenTickDuration: 7
@@ -382,7 +382,7 @@ MonoBehaviour:
     colliderHeight: 0.325
     mass: 1
     moveSpeed: 3.5
-    jumpHeight: 1.5
+    jumpHeight: 1
     playerRotationEasing: 0.35
     moveLerpGrounded: 1
     moveLerpAirborne: 0.2
@@ -398,11 +398,11 @@ MonoBehaviour:
     colliderHeight: 0.34
     mass: 5
     moveSpeed: 2
-    jumpHeight: 0.75
+    jumpHeight: 0.5
     playerRotationEasing: 0.15
     moveLerpGrounded: 0.75
     moveLerpAirborne: 0.075
-    health: 2
+    health: 3
   playerObjectPioComponent: {fileID: 0}
   playerModel: {fileID: 0}
 --- !u!114 &5740094998919706437

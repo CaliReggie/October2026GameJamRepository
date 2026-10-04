@@ -288,6 +288,8 @@ public class PlayerObjectPioComponent : PioComponent
     
     public void OnLockInPlace(InputValue buttonValue)
     {
+        if (IsIncapacitated) { return; }
+        
         if (buttonValue.isPressed)
         {
             isLockedInPlace = !isLockedInPlace;
@@ -316,6 +318,8 @@ public class PlayerObjectPioComponent : PioComponent
                 PlayerManager.Instance.CheckGameOverLost();
 
                 interactor.TryForceDropHeldInteractable();
+                
+                isLockedInPlace = false;
 
                 //todo: became incapacitated stuff
             }
@@ -606,7 +610,7 @@ public class PlayerObjectPioComponent : PioComponent
         // cannot move if not initialized
         if (!Initialized) { return; }
 
-        if (IsIncapacitated) { return; }
+        if (IsIncapacitated ) { return; }
         
         ManageMove();
 
@@ -616,6 +620,8 @@ public class PlayerObjectPioComponent : PioComponent
         
         void ManageMove()
         {
+            if (isLockedInPlace) { return; }
+            
             // playerObjectRigidbody.linearVelocity = targetMove;
             
             // jump can be requested with variable conditions so check that first

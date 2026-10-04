@@ -59,12 +59,11 @@ public class Cat : MonoBehaviour
 
         switch (newState)
         {
-            case CatState.Attacking: agent.isStopped = true;
+            case CatState.Attacking: 
+                agent.isStopped = true;
                 Vector3 lookPos = targetedPlayer.transform.position;
                 lookPos.y = transform.position.y;
-                lookPos.z = transform.position.z;
                 transform.LookAt(lookPos);
-                animator.SetTrigger("Swipe");
                 if (attackRoutine == null) attackRoutine = StartCoroutine(AttackRoutine());
                 break;
 
@@ -111,8 +110,7 @@ public class Cat : MonoBehaviour
         {
             if (searchRoutine == null) searchRoutine = StartCoroutine(SearchRoutine());
         }
-
-        if (Vector3.Distance(transform.position, targetedPlayer.transform.position) < attackDist)
+        else if (Vector3.Distance(transform.position, targetedPlayer.transform.position) < attackDist)
         {
             ChangeStates(CatState.Attacking);
         }
@@ -120,6 +118,7 @@ public class Cat : MonoBehaviour
 
     IEnumerator AttackRoutine()
     {
+        animator.SetTrigger("Swipe");
         yield return new WaitForSeconds(1);
         if (canSeePlayer) ChangeStates(CatState.Chasing);
         else ChangeStates(CatState.Patrol);
@@ -158,7 +157,8 @@ public class Cat : MonoBehaviour
             Debug.DrawLine(transform.position, hit.transform.position);
             if (Physics.Raycast(ray, out RaycastHit hit2, lineOfSightDist, targetLayers))
             {
-                if (hit2.collider.gameObject.CompareTag("Player"))
+                if (hit2.collider.gameObject.CompareTag("Player")
+                    && !hit2.collider.gameObject.GetComponent<PlayerObjectPioComponent>().IsIncapacitated)
                 {
                     canSeePlayer = true;
                     targetedPlayer = hit2.collider.gameObject;
@@ -168,6 +168,17 @@ public class Cat : MonoBehaviour
                 {
                     canSeePlayer = false;
                 }
+            }
+        }
+        
+        
+        if (targetedPlayer != null)
+        {
+            targetedPlayer.TryGetComponent<PlayerObjectPioComponent>(out var player);
+            if (player != null && player.IsIncapacitated)
+            {
+                StopAllCoroutines();
+                ChangeStates(CatState.Patrol);
             }
         }
     }
