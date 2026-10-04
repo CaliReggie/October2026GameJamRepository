@@ -68,7 +68,35 @@ public class Interactor : MonoBehaviour
     {
         if (hoveringInteractable != null) // will need to add differentation between holding or using here, and alt location
         {
-            SetHeldInteractable(hoveringInteractable, heldParentLocation);
+            // we can only be holding a pickup type interactable
+            switch (hoveringInteractable.InteractableType)
+            {
+                case Interactable.EInteractableType.PickupDropOnly:
+                case Interactable.EInteractableType.PickupUseDrop:    
+                    //pickup the hovering interactable
+                    SetHeldInteractable(hoveringInteractable, heldParentLocation);
+                    break;
+                case Interactable.EInteractableType.UseOn:
+                    // first see if holding a useable interactable, (if not then nothing)
+                    // next see if the hovering interactable can be used on, (if not then nothing)
+                    // next verity match between use can of holding and use on hovering, (if not then nothing)
+                    // lastly, use the hovering interactable with the holding interactable,
+                    if (heldInteractable != null && heldInteractable.InteractableType == Interactable.EInteractableType.PickupUseDrop)
+                    {
+                        // // Assuming the held interactable has a method to check if it can be used on the hovering interactable
+                        // if (heldInteractable.CanUseOn(hoveringInteractable))
+                        // {
+                        //     heldInteractable.UseOn(hoveringInteractable);
+                        // }
+                    }
+                    break;
+            }
+            
+            
+        }
+        else if (heldInteractable != null && heldInteractable.InteractableType == Interactable.EInteractableType.PickupUseDrop)
+        {
+            heldInteractable.Use();;
         }
     }
     
