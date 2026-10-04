@@ -354,7 +354,7 @@ MonoBehaviour:
   healthRegenTickDuration: 10
   incapacitatedDuration: 25
   healthRegenTickTimer: 0
-  incapacitatedEffectGameObject: {fileID: 6292268359478986309}
+  incapacitatedEffectGameObject: {fileID: 4023471651272456677}
 --- !u!114 &3925744941715817881
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -415,7 +415,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5fea29bb7c508c244a1f805a5fd3fc4d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  outlineMode: 0
+  outlineMode: 1
   outlineColor: {r: 1, g: 1, b: 1, a: 1}
   outlineWidth: 2
   precomputeOutline: 1
@@ -1533,8 +1533,8 @@ GameObject:
   - component: {fileID: 4412847584261861100}
   - component: {fileID: 3811887178971955986}
   - component: {fileID: 4303951747690468826}
-  - component: {fileID: 6558583028495885555}
-  m_Layer: 6
+  - component: {fileID: 1712736134118624411}
+  m_Layer: 27
   m_Name: ReviveInteractableSphere
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1551,10 +1551,10 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0.35, y: 0.35, z: 0.35}
+  m_LocalScale: {x: 0.3, y: 0.3, z: 0.3}
   m_ConstrainProportionsScale: 1
   m_Children: []
-  m_Father: {fileID: 6920552478003449210}
+  m_Father: {fileID: 5396357791531452694}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!33 &4412847584261861100
 MeshFilter:
@@ -1571,7 +1571,7 @@ MeshRenderer:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4023471651272456677}
-  m_Enabled: 1
+  m_Enabled: 0
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
@@ -1630,7 +1630,7 @@ SphereCollider:
   serializedVersion: 3
   m_Radius: 0.5
   m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &6558583028495885555
+--- !u!114 &1712736134118624411
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -1639,7 +1639,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 4023471651272456677}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: bb592456fde23c44b98036c9b4ef5997, type: 3}
+  m_Script: {fileID: 11500000, guid: 9f0e5319a858f2349a79b063cefb1205, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   interactableType: 2
@@ -1650,6 +1650,7 @@ MonoBehaviour:
   staticInEnvironment: 0
   numHovering: 0
   <IsHeld>k__BackingField: 0
+  playerObjectPioComponent: {fileID: 0}
 --- !u!1 &5763502692968228051
 GameObject:
   m_ObjectHideFlags: 0
@@ -1712,38 +1713,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 8398529081268596430}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &6292268359478986309
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 6920552478003449210}
-  m_Layer: 6
-  m_Name: ReviveObjectParent
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &6920552478003449210
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6292268359478986309}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children:
-  - {fileID: 565771988453079844}
-  m_Father: {fileID: 5396357791531452694}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &6672812832129556017
 GameObject:
   m_ObjectHideFlags: 0
@@ -1804,7 +1773,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 6920552478003449210}
+  - {fileID: 565771988453079844}
   m_Father: {fileID: 9105057357706212573}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &7528669337438317077
