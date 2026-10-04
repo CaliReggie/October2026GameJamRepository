@@ -478,6 +478,20 @@ public class PlayerObjectPioComponent : PioComponent
         {
             // playerObjectRigidbody.linearVelocity = targetMove;
             
+            // jump can be requested with variable conditions so check that first
+            if (JumpRequested)
+            {
+                // resetting jump buffers (also resets JumpRequested)
+                jumpBufferTimer = 0f;
+                jumpCoyoteBufferTimer = 0f;
+                // use grav to calc jump height
+                // targetMove.y = Mathf.Sqrt(2f * jumpHeight * -Physics.gravity.y); 
+                
+                // CHANGED FOR SQUIRREL GAME. using force instead of setting velocity directly
+                playerObjectRigidbody.AddForce(Vector3.up * Mathf.Sqrt(2f * jumpHeight
+                    * -Physics.gravity.y), ForceMode.VelocityChange);
+            }
+            
             // CHANGED FOR SUIRREL GAME. using physics forces.
             Vector3 currentVelocity = playerObjectRigidbody.linearVelocity;
             
@@ -587,7 +601,13 @@ public class PlayerObjectPioComponent : PioComponent
             }
             
             // if just left grounded, start coyote timer
-            if (!isGrounded && wasGrounded && targetMove.y <= 0f)
+            // if (!isGrounded && wasGrounded && targetMove.y <= 0f)
+            // {
+            //     jumpCoyoteBufferTimer = jumpCoyoteBufferDuration;
+            // }
+            
+            //CHANGED FOR SQUIRREL GAME
+            if (!isGrounded && wasGrounded && playerObjectRigidbody.linearVelocity.y <= 0f)
             {
                 jumpCoyoteBufferTimer = jumpCoyoteBufferDuration;
             }
@@ -615,33 +635,33 @@ public class PlayerObjectPioComponent : PioComponent
             targetMove.z = orientedMoveInput.z * walkSpeed;
             
             // jump can be requested with variable conditions so check that first
-            if (JumpRequested)
-            {
-                // resetting jump buffers (also resets JumpRequested)
-                jumpBufferTimer = 0f;
-                jumpCoyoteBufferTimer = 0f;
-                // use grav to calc jump height
-                // targetMove.y = Mathf.Sqrt(2f * jumpHeight * -Physics.gravity.y); 
-                
-                // CHANGED FOR SQUIRREL GAME. using force instead of setting velocity directly
-                playerObjectRigidbody.AddForce(Vector3.up * Mathf.Sqrt(2f * jumpHeight
-                    * -Physics.gravity.y), ForceMode.VelocityChange);
-            }
-            else if (isGrounded)
-            {
-                if (targetMove.y <= 0f)
-                {
-                    targetMove.y = 0f;
-                }
-                else // don't think needed / think is smoother ?
-                {
-                    targetMove.y += Physics.gravity.y * Time.deltaTime;
-                }
-            }
-            else
-            {
-                targetMove.y += Physics.gravity.y * Time.deltaTime;
-            }
+            // if (JumpRequested)
+            // {
+            //     // resetting jump buffers (also resets JumpRequested)
+            //     jumpBufferTimer = 0f;
+            //     jumpCoyoteBufferTimer = 0f;
+            //     // use grav to calc jump height
+            //     // targetMove.y = Mathf.Sqrt(2f * jumpHeight * -Physics.gravity.y); 
+            //     
+            //     // CHANGED FOR SQUIRREL GAME. using force instead of setting velocity directly
+            //     playerObjectRigidbody.AddForce(Vector3.up * Mathf.Sqrt(2f * jumpHeight
+            //         * -Physics.gravity.y), ForceMode.VelocityChange);
+            // }
+            // else if (isGrounded)
+            // {
+            //     if (targetMove.y <= 0f)
+            //     {
+            //         targetMove.y = 0f;
+            //     }
+            //     else // don't think needed / think is smoother ?
+            //     {
+            //         targetMove.y += Physics.gravity.y * Time.deltaTime;
+            //     }
+            // }
+            // else
+            // {
+            //     targetMove.y += Physics.gravity.y * Time.deltaTime;
+            // }
         }
         
         void ManageState()
@@ -666,7 +686,13 @@ public class PlayerObjectPioComponent : PioComponent
             else
             {
                 // if not grounded and target move is up, jumping
-                if (targetMove.y > 0f)
+                // if (targetMove.y > 0f)
+                // {
+                //     targetState = EPlayerObjectState.Jumping;
+                // }
+                
+                //CHANGED FOR SQUIRREL GAME
+                if (playerObjectRigidbody.linearVelocity.y > 0f)
                 {
                     targetState = EPlayerObjectState.Jumping;
                 }
