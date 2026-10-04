@@ -20,6 +20,8 @@ public class Generator : MonoBehaviour
     [SerializeField] private int nextButtonIndex;
     [SerializeField] GeneratorButton nextButton;
 
+    [SerializeField] AudioSource victorySFX;
+
     public ParticleSystem brokenSparks;
 
     private void Start()
@@ -43,6 +45,7 @@ public class Generator : MonoBehaviour
     
     private void GameWon()
     {
+        AudioSource source = Instantiate(victorySFX);
         GameManager.Instance?.GameOver(true);
     }
 
