@@ -41,7 +41,7 @@ public class LaserPointer : Interactable
         base.Use();
         laserActive = !laserActive;
         lineRenderer.enabled = laserActive;
-        //fakePlayer.SetActive(laserActive);
+        fakePlayer.SetActive(laserActive);
     }
 
     public void PointLaser()
@@ -56,6 +56,7 @@ public class LaserPointer : Interactable
             {
                 lineRenderer.SetPosition(0, laserOrigin.position);
                 lineRenderer.SetPosition(1, hit.point);
+                fakePlayer.transform.position = hit.point;
             }
         }
     }
