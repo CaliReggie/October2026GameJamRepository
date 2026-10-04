@@ -29,7 +29,7 @@ TagManager:
   - Door
   - Enemy
   - Wall
-  - 
+  - LaserPointer
   - 
   - 
   - Interactable
