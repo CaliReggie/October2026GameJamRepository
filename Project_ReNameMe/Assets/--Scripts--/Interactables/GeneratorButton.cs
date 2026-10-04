@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 
 public class GeneratorButton : MonoBehaviour
@@ -34,11 +35,18 @@ public class GeneratorButton : MonoBehaviour
         pushed = true;
 
         generator.IsPressedButtonNextButton(this);
+        StartCoroutine(UnpressButton());
     }
 
     private void OnCollisionEnter(Collision collision)
     {
         if (pushed) return;
         PushButton();
+    }
+
+    IEnumerator UnpressButton()
+    {
+        yield return new WaitForSeconds(2);
+        pushed = false;
     }
 }
