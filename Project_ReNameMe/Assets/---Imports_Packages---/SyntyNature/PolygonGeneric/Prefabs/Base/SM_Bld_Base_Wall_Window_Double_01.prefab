@@ -12,6 +12,9 @@ GameObject:
   - component: {fileID: 2445650241245887875}
   - component: {fileID: 438052743486097737}
   - component: {fileID: 1775095880}
+  - component: {fileID: 4554544937151614042}
+  - component: {fileID: 2233747601916135638}
+  - component: {fileID: 8234907784829292016}
   m_Layer: 0
   m_Name: SM_Bld_Base_Wall_Window_Double_01
   m_TagString: Untagged
@@ -110,8 +113,71 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 2.4999924, y: 3.0057428, z: 0.2556079}
-  m_Center: {x: -1.2499962, y: 1.5028714, z: 0}
+  m_Size: {x: 0.14544654, y: 3.0057428, z: 0.2556079}
+  m_Center: {x: -2.4332314, y: 1.5028714, z: 2.880994e-13}
+--- !u!65 &4554544937151614042
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2095505155170527388}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 0.13376255, y: 3.0057428, z: 0.2556079}
+  m_Center: {x: -0.06688128, y: 1.5028714, z: -8.7612345e-16}
+--- !u!65 &2233747601916135638
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2095505155170527388}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 2.340088, y: 1.0216122, z: 0.2556079}
+  m_Center: {x: -1.2671244, y: 2.494937, z: 2.7058e-14}
+--- !u!65 &8234907784829292016
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2095505155170527388}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 2.340088, y: 0.6871338, z: 0.2556079}
+  m_Center: {x: -1.2671244, y: 0.34832764, z: 2.7058e-14}
 --- !u!1 &6797842094745002863
 GameObject:
   m_ObjectHideFlags: 0
@@ -158,7 +224,9 @@ GameObject:
   - component: {fileID: 8293457410064242661}
   - component: {fileID: 7268718566519349133}
   - component: {fileID: 5780898976496291808}
-  m_Layer: 0
+  - component: {fileID: 1741279476545564318}
+  - component: {fileID: 9111613381331550443}
+  m_Layer: 27
   m_Name: SM_Bld_Base_Wall_Window_Double_01_Glass
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -245,6 +313,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b6cfc1c8a6121104bae16b82d684c906, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  breakForceThreshold: 7.5
   brokenMesh: {fileID: 6797842094745002863}
 --- !u!65 &7268718566519349133
 BoxCollider:
@@ -265,8 +334,8 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 2.2181494, y: 1.2925365, z: 0}
-  m_Center: {x: -1.2500006, y: 1.3262932, z: 0}
+  m_Size: {x: 2.2181494, y: 1.2925365, z: 0.1}
+  m_Center: {x: -1.2500006, y: 1.3262932, z: 2.835065e-12}
 --- !u!54 &5780898976496291808
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -294,6 +363,71 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
+--- !u!114 &1741279476545564318
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8347353336174977596}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5fea29bb7c508c244a1f805a5fd3fc4d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  outlineMode: 1
+  outlineColor: {r: 1, g: 1, b: 1, a: 1}
+  outlineWidth: 10
+  precomputeOutline: 1
+  bakeKeys:
+  - {fileID: -7154151113001695628, guid: b65b5766b6672c04189d66de9e49e580, type: 3}
+  bakeValues:
+  - data:
+    - {x: 0, y: 0, z: 1}
+    - {x: 0, y: 0, z: 1}
+    - {x: 0, y: 0, z: 1}
+    - {x: 0, y: 0, z: 1}
+    - {x: 0, y: 0, z: 1}
+    - {x: 0, y: 0, z: 1}
+    - {x: 0, y: 0, z: 1}
+    - {x: 0, y: 0, z: 1}
+    - {x: 0, y: 0, z: 1}
+    - {x: 0, y: 0, z: 1}
+    - {x: 0, y: 0, z: 1}
+    - {x: 0, y: 0, z: 1}
+    - {x: 0, y: 0, z: 1}
+    - {x: 0, y: 0, z: 1}
+    - {x: 0, y: 0, z: 1}
+    - {x: 0, y: 0, z: 1}
+    - {x: 0, y: 0, z: 1}
+    - {x: 0, y: 0, z: 1}
+    - {x: 0, y: 0, z: 1}
+    - {x: 0, y: 0, z: 1}
+    - {x: 0, y: 0, z: 1}
+    - {x: 0, y: 0, z: 1}
+    - {x: 0, y: 0, z: 1}
+    - {x: 0, y: 0, z: 1}
+    - {x: 0, y: 0, z: 1}
+--- !u!114 &9111613381331550443
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8347353336174977596}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bb592456fde23c44b98036c9b4ef5997, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  interactableType: 2
+  useInteractionType: 0
+  outline: {fileID: 1741279476545564318}
+  rb: {fileID: 5780898976496291808}
+  col: {fileID: 7268718566519349133}
+  staticInEnvironment: 1
+  numHovering: 0
+  <IsHeld>k__BackingField: 0
 --- !u!1001 &156006639517127474
 PrefabInstance:
   m_ObjectHideFlags: 0
