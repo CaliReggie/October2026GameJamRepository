@@ -1,3 +1,5 @@
+using NUnit.Framework;
+using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
@@ -7,13 +9,17 @@ public class Generator : MonoBehaviour
 
     [Header("ButtonPressing")]
     [SerializeField] private GeneratorButton[] buttonOrder;
-    [SerializeField] private int nextButton;
+    [SerializeField] private List<GeneratorButton> buttonsPressed;
+    [SerializeField] private GeneratorButton[] buttonList;
+    [SerializeField] private int nextButtonIndex;
+    [SerializeField] GeneratorButton nextButton;
 
     public ParticleSystem brokenSparks;
 
     private void Start()
     {
-        nextButton = 0;
+        nextButtonIndex = 0;
+        nextButton = buttonOrder[nextButtonIndex];
     }
 
     private void Update()
@@ -30,12 +36,13 @@ public class Generator : MonoBehaviour
 
     void ButtonPressing()
     {
-        if (buttonOrder[nextButton].pushed && buttonOrder.Length -1 > nextButton)
+        if (buttonOrder[nextButtonIndex].pushed && buttonOrder.Length -1 > nextButtonIndex)
         {
-            nextButton++;
+            nextButtonIndex++;
+            nextButton = buttonOrder[nextButtonIndex];
         }
         
-        if (buttonOrder.All(x => x.pushed)) 
+        if (CorrectOrder()) 
         {
             WaterOnGenerator();
         }
@@ -43,8 +50,9 @@ public class Generator : MonoBehaviour
 
     public bool IsPressedButtonNextButton(GeneratorButton button)
     {
-        if (buttonOrder[nextButton] == button)
+        if (nextButton == button)
         {
+            buttonsPressed.Add(button);
             return true;
         }
         else
@@ -56,10 +64,26 @@ public class Generator : MonoBehaviour
 
     void ResetButtons()
     {
-        foreach (var button in buttonOrder)
+        foreach (var button in buttonList)
         {
             button.pushed = false;
-            nextButton = 0;
+            nextButtonIndex = 0;
+            nextButton = buttonOrder[nextButtonIndex];
+            buttonsPressed.Clear();
         }
+    }
+
+    bool CorrectOrder()
+    {
+        int buttonsCorrect = 0;
+        for (int i = 0; i < buttonsPressed.Count; i++)
+        {
+            if (buttonsPressed[i] == buttonOrder[i])
+            {
+                buttonsCorrect++;
+            }
+        }
+
+        return buttonsCorrect >= buttonOrder.Length;
     }
 }
