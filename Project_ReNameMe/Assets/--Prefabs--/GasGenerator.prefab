@@ -6351,19 +6351,19 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: a1f02413597aba5479a5f57d4e9c638a, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 757.346
+      value: 738.72
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: a1f02413597aba5479a5f57d4e9c638a, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 1235.187
+      value: 1228.32
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: a1f02413597aba5479a5f57d4e9c638a, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -35.2
+      value: -1.96
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: a1f02413597aba5479a5f57d4e9c638a, type: 3}
       propertyPath: m_LocalRotation.w
-      value: 0.7071078
+      value: 0.7071079
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: a1f02413597aba5479a5f57d4e9c638a, type: 3}
       propertyPath: m_LocalRotation.x
@@ -6371,7 +6371,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: a1f02413597aba5479a5f57d4e9c638a, type: 3}
       propertyPath: m_LocalRotation.y
-      value: -0.7071058
+      value: 0.70710576
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: a1f02413597aba5479a5f57d4e9c638a, type: 3}
       propertyPath: m_LocalRotation.z
@@ -6383,12 +6383,16 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: a1f02413597aba5479a5f57d4e9c638a, type: 3}
       propertyPath: m_LocalEulerAnglesHint.y
-      value: -90
+      value: 90
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: a1f02413597aba5479a5f57d4e9c638a, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: -4683669308469848369, guid: a1f02413597aba5479a5f57d4e9c638a, type: 3}
+      propertyPath: 'm_Materials.Array.data[0]'
+      value: 
+      objectReference: {fileID: 2100000, guid: f66de0c0998163d48bf1a98ceebc8f17, type: 2}
     - target: {fileID: 919132149155446097, guid: a1f02413597aba5479a5f57d4e9c638a, type: 3}
       propertyPath: m_Name
       value: GasGenerator
