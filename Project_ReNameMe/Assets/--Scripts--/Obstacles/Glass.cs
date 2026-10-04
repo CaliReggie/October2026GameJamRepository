@@ -12,6 +12,11 @@ public class Glass : MonoBehaviour
         {
             Rigidbody rb = collision.gameObject.GetComponent<Rigidbody>();
             
+            if (rb == null)
+            {
+                rb = collision.gameObject.GetComponentInParent<Rigidbody>();
+            }
+            
             if (rb != null && collision.relativeVelocity.magnitude > breakForceThreshold)
             {
                 brokenMesh.SetActive(true);
