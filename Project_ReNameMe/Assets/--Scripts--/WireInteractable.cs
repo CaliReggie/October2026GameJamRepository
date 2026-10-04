@@ -33,7 +33,7 @@ public class WireInteractable : Interactable
         
         UpdateWireVisuals();
         
-        Invoke(nameof(GameOver), 2.5f);
+        Invoke(nameof(GameWon), 2.5f);
     }
     
     private void UpdateWireVisuals()
@@ -49,8 +49,8 @@ public class WireInteractable : Interactable
         }
     }
     
-    private void GameOver()
+    private void GameWon()
     {
-        GameManager.Instance.GameOver(true);
+        GameManager.Instance?.GameOver(true);
     }
 }

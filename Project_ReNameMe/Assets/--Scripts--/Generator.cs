@@ -32,6 +32,12 @@ public class Generator : MonoBehaviour
         generatorOn = false;
         if (!brokenSparks.isPlaying) brokenSparks.Play();
         Debug.Log("Generator Wet");
+        Invoke(nameof(GameWon), 2.5f);
+    }
+    
+    private void GameWon()
+    {
+        GameManager.Instance?.GameOver(true);
     }
 
     void ButtonPressing()
