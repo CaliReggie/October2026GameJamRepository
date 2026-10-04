@@ -40,6 +40,8 @@ public class Cat : MonoBehaviour
     Coroutine waitAtPointRoutine;
     Coroutine searchRoutine;
 
+    Coroutine attackRoutine;
+
     private void Update()
     {
         StateMachine();
@@ -63,7 +65,7 @@ public class Cat : MonoBehaviour
                 lookPos.z = transform.position.z;
                 transform.LookAt(lookPos);
                 animator.SetTrigger("Swipe");
-                StartCoroutine(AttackRoutine());
+                if (attackRoutine == null) attackRoutine = StartCoroutine(AttackRoutine());
                 break;
 
             case CatState.Patrol: agent.isStopped = false;
@@ -121,6 +123,7 @@ public class Cat : MonoBehaviour
         yield return new WaitForSeconds(1);
         if (canSeePlayer) ChangeStates(CatState.Chasing);
         else ChangeStates(CatState.Patrol);
+        attackRoutine = null;
     }
 
     void Patrol()
