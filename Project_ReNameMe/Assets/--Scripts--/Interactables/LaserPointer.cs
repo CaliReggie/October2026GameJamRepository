@@ -36,6 +36,18 @@ public class LaserPointer : Interactable
         
     }
 
+    public override void EndInteract(Transform dropPosition = null, Vector3 throwVelocity = default)
+    {
+        base.EndInteract(dropPosition, throwVelocity);
+        
+        if (laserActive)
+        {
+            laserActive = false;
+            lineRenderer.enabled = false;
+            fakePlayer.SetActive(false);
+        }
+    }
+
     public override void Use()
     {
         base.Use();

@@ -100,7 +100,7 @@ public class Cat : MonoBehaviour
         if (targetedPlayer != null && canSeePlayer)
         {
             targetedPlayer.TryGetComponent<PlayerObjectPioComponent>(out var player);
-            if (player.IsIncapacitated) ChangeStates(CatState.Patrol);
+            if (player != null && player.IsIncapacitated) ChangeStates(CatState.Patrol);
             agent.speed = chaseSpeed;
             agent.SetDestination(targetedPlayer.transform.position);
         }
@@ -127,7 +127,7 @@ public class Cat : MonoBehaviour
     {
         agent.speed = patrolSpeed;
 
-        if (Vector3.Distance(transform.position, patrolPoints[currentPointIndex].transform.position) < 1)
+        if (Vector3.Distance(transform.position, patrolPoints[currentPointIndex].transform.position) < 3)
         {
             Debug.Log("Arrived At Point");
             ChangeStates(CatState.Waiting);
