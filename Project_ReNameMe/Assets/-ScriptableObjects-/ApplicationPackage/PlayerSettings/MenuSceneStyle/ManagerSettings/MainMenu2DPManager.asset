@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: MainMenu2DPManager
   m_EditorClassIdentifier: 
   targetPlayers: 2
-  strictTargetPlayers: 0
+  strictTargetPlayers: 1
   playersSettings:
   - {fileID: 11400000, guid: 8c8b6ed11379848a3a553b2356093102, type: 2}
   - {fileID: 11400000, guid: 4736bdc11b3eb0847a23f3f4efd3d016, type: 2}

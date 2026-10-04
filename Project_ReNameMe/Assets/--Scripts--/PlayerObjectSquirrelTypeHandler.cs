@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 using UnityEngine.Serialization;
 
@@ -56,7 +57,17 @@ public class PlayerObjectSquirrelTypeHandler : MonoBehaviour
         GetComponentInParent<PlayerInputObject>().VisualIndex == PlayerManager.Instance.SmallSquirrelAssignedPlayerVisualIndex
             ? smallSquirrelData
             : bigSquirrelData;
+
+    private void Awake()
+    {
+        UpdateSquirrelType();
+    }
     
+    private void OnEnable()
+    {
+        UpdateSquirrelType();
+    }
+
     private void Start()
     {
         playerObjectPioComponent = GetComponent<PlayerObjectPioComponent>();
@@ -68,6 +79,7 @@ public class PlayerObjectSquirrelTypeHandler : MonoBehaviour
             UpdateSquirrelType();
         }
     }
+    
     
     private void OnDestroy() 
     {
@@ -91,7 +103,7 @@ public class PlayerObjectSquirrelTypeHandler : MonoBehaviour
             {
                 UpdatePlayerObjectData(bigSquirrelData);
             }
-            else if (GameManager.Instance != null) // starting in game scene with no pre assignment from mainmenu
+            else // starting in game scene with no pre assignment from mainmenu
             {
                 if (PlayerManager.Instance.SmallSquirrelAssignedPlayerVisualIndex == -1)
                 {
