@@ -177,9 +177,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   cameraObject: {fileID: 3847346578986444025}
   playerObjectPio: {fileID: 0}
+  playerObjectReviveInteractable: {fileID: 0}
   interactableLayerMask:
     serializedVersion: 2
-    m_Bits: 134217792
+    m_Bits: 134217728
   interactRaycastDistance: 3
   interactRaycastRadius: 0.2
   maxDistanceFromObjectToInteract: 0.5

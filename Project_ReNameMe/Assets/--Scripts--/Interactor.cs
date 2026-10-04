@@ -10,6 +10,8 @@ public class Interactor : MonoBehaviour
     
     [SerializeField] private GameObject playerObjectPio;
     
+    [SerializeField] private Interactable playerObjectReviveInteractable;
+    
     [SerializeField] private LayerMask interactableLayerMask;
     
     [SerializeField] private float interactRaycastDistance = 1f;
@@ -122,7 +124,7 @@ public class Interactor : MonoBehaviour
         {
             Interactable interactable = hit.collider.GetComponent<Interactable>();
             
-            if (interactable != null && interactable != heldInteractable)
+            if (interactable != null && interactable != heldInteractable && interactable != playerObjectReviveInteractable)
             {
                 float distanceToInteractable = Vector3.Distance(playerObjectPio.transform.position, hit.point);
                 

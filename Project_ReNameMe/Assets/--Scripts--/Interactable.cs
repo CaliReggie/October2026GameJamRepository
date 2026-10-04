@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 
 public class Interactable : MonoBehaviour
@@ -115,34 +116,39 @@ public class Interactable : MonoBehaviour
     
     [Header("Inscribed")]
     
-    [SerializeField] private EInteractableType interactableType;
+    [SerializeField] protected EInteractableType interactableType;
     
-    [SerializeField] private EUseInteractionType useInteractionType;
+    [SerializeField] protected EUseInteractionType useInteractionType;
 
-    [SerializeField] private Outline outline;
+    [SerializeField] protected Outline outline;
     
-    [SerializeField] private Rigidbody rb;
+    [SerializeField] protected Rigidbody rb;
     
-    [SerializeField] private Collider col;
+    [SerializeField] protected Collider col;
 
-    [SerializeField] private bool staticInEnvironment;
+    [SerializeField] protected bool staticInEnvironment;
 
     [Header("Dynamic")]
     
-    [SerializeField] private int numHovering;
+    [SerializeField] protected int numHovering;
     
-    [field: SerializeField] public bool IsHeld { get; private set; }
+    [field: SerializeField] public bool IsHeld { get; protected set; }
     
     public EInteractableType InteractableType => interactableType;
     
     public EUseInteractionType UseInteractionType => useInteractionType;
     
-    protected virtual void Start()
+    protected virtual void Awake()
     {
         EndHover();
         EndInteract();
     }
     
+    protected virtual void Start()
+    {
+        
+    }
+
     protected virtual void ToggleOutline(bool enable)
     {
         if (outline != null)

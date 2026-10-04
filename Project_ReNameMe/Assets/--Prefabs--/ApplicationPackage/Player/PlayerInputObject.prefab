@@ -896,6 +896,10 @@ PrefabInstance:
       propertyPath: playerObjectPio
       value: 
       objectReference: {fileID: 6565307627249078770}
+    - target: {fileID: 2910991989454862909, guid: 095c3ad28e040ae42b85886f477f0edf, type: 3}
+      propertyPath: playerObjectReviveInteractable
+      value: 
+      objectReference: {fileID: 7105687130553958603}
     - target: {fileID: 3847346578986444025, guid: 095c3ad28e040ae42b85886f477f0edf, type: 3}
       propertyPath: m_Name
       value: PlayerObjectCamera
@@ -995,6 +999,17 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 3333803076317224354, guid: e33d25cb27e57374d801567e80d0cb26, type: 3}
   m_PrefabInstance: {fileID: 8455689430729362512}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &7105687130553958603 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 1712736134118624411, guid: e33d25cb27e57374d801567e80d0cb26, type: 3}
+  m_PrefabInstance: {fileID: 8455689430729362512}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9f0e5319a858f2349a79b063cefb1205, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &8785260700779082847 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 915111102734727183, guid: e33d25cb27e57374d801567e80d0cb26, type: 3}
