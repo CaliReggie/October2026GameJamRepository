@@ -154,6 +154,8 @@ public class PlayerObjectPioComponent : PioComponent
     
     [SerializeField] private Slider healthSlider;
 
+    [SerializeField] private Interactor interactor;
+
     public bool IsIncapacitated => currentHealth <= 0;
     
     public Animator Animator { get => animator; set => animator = value; }
@@ -312,6 +314,8 @@ public class PlayerObjectPioComponent : PioComponent
                 incapacitatedEffectGameObject.SetActive(true);
 
                 PlayerManager.Instance.CheckGameOverLost();
+
+                interactor.TryForceDropHeldInteractable();
 
                 //todo: became incapacitated stuff
             }

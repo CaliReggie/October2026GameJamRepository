@@ -1,5 +1,6 @@
 using System;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class Interactable : MonoBehaviour
 {
@@ -257,6 +258,10 @@ public class Interactable : MonoBehaviour
         ToggleDynamic(!staticInEnvironment);
         
         BeDropped(dropPosition, throwVelocity);
+        
+        if (interactableType == EInteractableType.UseOnly) { return; }
+        
+        SceneManager.MoveGameObjectToScene(gameObject, SceneManager.GetActiveScene());
     }
     
     public virtual void Use()

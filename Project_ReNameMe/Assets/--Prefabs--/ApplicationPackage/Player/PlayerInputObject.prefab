@@ -924,6 +924,17 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 095c3ad28e040ae42b85886f477f0edf, type: 3}
+--- !u!114 &4719845455769330946 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 2910991989454862909, guid: 095c3ad28e040ae42b85886f477f0edf, type: 3}
+  m_PrefabInstance: {fileID: 7630691673989291839}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9fac061e06559874ab3236a5d8426f12, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!20 &7820593782306229381 stripped
 Camera:
   m_CorrespondingSourceObject: {fileID: 391247167871013818, guid: 095c3ad28e040ae42b85886f477f0edf, type: 3}
@@ -942,6 +953,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 2406139996449952472}
     m_Modifications:
+    - target: {fileID: 915111102734727183, guid: e33d25cb27e57374d801567e80d0cb26, type: 3}
+      propertyPath: interactor
+      value: 
+      objectReference: {fileID: 4719845455769330946}
     - target: {fileID: 915111102734727183, guid: e33d25cb27e57374d801567e80d0cb26, type: 3}
       propertyPath: healthSlider
       value: 

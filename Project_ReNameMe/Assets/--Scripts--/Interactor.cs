@@ -34,11 +34,21 @@ public class Interactor : MonoBehaviour
 
     [SerializeField] private Transform dropLocation;
     
+    [SerializeField] private PlayerObjectPioComponent playerObjectPioComponent;
+    
     public void TryShootRemoveHeldInteractable()
     {
         if (heldInteractable != null)
         {
             RemoveHeldInteractable(dropLocation, cameraObject.transform.forward * shootDropForce);
+        }
+    }
+    
+    public void TryForceDropHeldInteractable()
+    {
+        if (heldInteractable != null)
+        {
+            RemoveHeldInteractable(dropLocation);
         }
     }
 
@@ -48,8 +58,15 @@ public class Interactor : MonoBehaviour
         {
             PlayerManager.Instance.OnCharacterAssignmentChanged += UpdateFromSquirrelData;
         }
+        
+        playerObjectPioComponent = playerObjectPio.GetComponent<PlayerObjectPioComponent>();
     }
-    
+
+    private void OnDisable()
+    {
+        RemoveHeldInteractable();
+    }
+
     private void OnDestroy()
     {
         if (PlayerManager.Instance != null)
@@ -76,6 +93,11 @@ public class Interactor : MonoBehaviour
         
     public void OnInteract()
     {
+        if (playerObjectPioComponent.IsIncapacitated)
+        {
+            return;
+        }
+        
         if (hoveringInteractable != null) // will need to add differentation between holding or using here, and alt location
         {
             // we can only be holding a pickup type interactable
