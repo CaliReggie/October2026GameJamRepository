@@ -774,6 +774,11 @@ public class PlayerManager : BaseStateManagerApplicationListener<PlayerManager, 
     
     public void CheckGameOverLost()
     {
+        Invoke(nameof(GameOverCheck), 2.5f);
+    }
+    
+    private void GameOverCheck()
+    {
         if (context.NumPlayers == 0)
         {
             return;
