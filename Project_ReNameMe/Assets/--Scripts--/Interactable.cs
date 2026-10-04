@@ -6,7 +6,7 @@ public class Interactable : MonoBehaviour
     {
         PickupDropOnly,
         PickupUseDrop,
-        UseOn
+        UseOnly
     }
     
     public enum EUseInteractionType
@@ -19,39 +19,47 @@ public class Interactable : MonoBehaviour
     {
         if (useableInteractable == null)
         {
+            Debug.Log("Cannot use null pickup interactable");
             return false;
         }
         
         if (useableInteractable.InteractableType != EInteractableType.PickupUseDrop)
         {
+            Debug.Log("Cannot use pickup interactable that is not PickupUseDrop");
             return false;
         }
         
         switch (useableInteractable.UseInteractionType)
         {
             case EUseInteractionType.Basic:
+                Debug.Log("Can use basic pickup interactable");
                 return true;
             
             case EUseInteractionType.Cutting:
                 
                 if (useOnInteractable == null)
                 {
+                    Debug.Log("Cannot use cutting pickup interactable without a use on interactable");
                     return false;
                 }
                 
-                if (useOnInteractable.InteractableType != EInteractableType.UseOn)
+                if (useOnInteractable.InteractableType != EInteractableType.UseOnly)
                 {
+                    Debug.Log("Cannot use cutting pickup interactable with a non-use on interactable");
                     return false;
                 }
                 
                 if (useOnInteractable.UseInteractionType != EUseInteractionType.Cutting)
                 {
+                    Debug.Log("Cannot use cutting pickup interactable with a non-use on interactable");
                     return false;
                 }
-
+                
+                Debug.Log("Can use cutting pickup interactable with a cutting use on interactable");
                 return true;
             
             default:
+                Debug.Log("Cannot use pickup interactable with unknown use interaction type");
                 return false;
         }
     }
@@ -60,39 +68,47 @@ public class Interactable : MonoBehaviour
     {
         if (useOn == null)
         {
+            Debug.Log("Cannot use null use on interactable");
             return false;
         }
         
-        if (useOn.InteractableType != EInteractableType.UseOn)
+        if (useOn.InteractableType != EInteractableType.UseOnly)
         {
+            Debug.Log("Cannot use use on interactable that is not UseOnly");
             return false;
         }
 
         switch (useOn.UseInteractionType)
         {
             case EUseInteractionType.Basic:
+                Debug.Log("Can use basic use on interactable");
                 return true;
             
             case EUseInteractionType.Cutting:
                 
                 if (usableInteractable == null)
                 {
+                    Debug.Log("Cannot use cutting use on interactable without a usable interactable");
                     return false;
                 }
                 
                 if (usableInteractable.InteractableType != EInteractableType.PickupUseDrop)
                 {
+                    Debug.Log("Cannot use cutting use on interactable with a non-pickup usable interactable");
                     return false;
                 }
                 
                 if (usableInteractable.UseInteractionType != EUseInteractionType.Cutting)
                 {
+                    Debug.Log("Cannot use cutting use on interactable with a non-cutting usable interactable");
                     return false;
                 }
 
+                Debug.Log("Can use cutting use on interactable with a cutting usable interactable");
                 return true;
             
             default:
+                Debug.Log("Cannot use use on interactable with unknown use interaction type");
                 return false;
         }
     }
@@ -109,9 +125,7 @@ public class Interactable : MonoBehaviour
     
     [SerializeField] private Collider col;
 
-    [SerializeField] private bool isDynamicLoose = true;
-    
-    [SerializeField] private bool isDynamicHeld;
+    [SerializeField] private bool staticInEnvironment;
 
     [Header("Dynamic")]
     
@@ -125,8 +139,7 @@ public class Interactable : MonoBehaviour
     
     protected virtual void Start()
     {
-        ToggleOutline(false);
-
+        EndHover();
         EndInteract();
     }
     
@@ -155,11 +168,7 @@ public class Interactable : MonoBehaviour
     
     protected virtual void BeHeld(Transform heldParentLocation)
     {
-        if (interactableType == EInteractableType.UseOn)
-        {
-            Debug.LogWarning("Attempted to hold an interactable that is UseOn. This is not allowed.");
-            return;
-        }
+        if (interactableType == EInteractableType.UseOnly) { return; }
         
         IsHeld = true;
         
@@ -179,11 +188,7 @@ public class Interactable : MonoBehaviour
     
     protected virtual void BeDropped(Transform dropPosition = null, Vector3 throwVelocity = default)
     {
-        if (interactableType == EInteractableType.UseOn)
-        {
-            Debug.LogWarning("Attempted to drop an interactable that is UseOn. This is not allowed.");
-            return;
-        }
+        if (interactableType == EInteractableType.UseOnly) { return; }
         
         IsHeld = false;
         
@@ -236,14 +241,14 @@ public class Interactable : MonoBehaviour
     
     public virtual void StartInteract(Transform heldParentLocation)
     { 
-       ToggleDynamic(isDynamicHeld);
+       ToggleDynamic(false);
        
        BeHeld(heldParentLocation);
     }
 
     public virtual void EndInteract(Transform dropPosition = null, Vector3 throwVelocity = default)
     {
-        ToggleDynamic(isDynamicLoose);
+        ToggleDynamic(!staticInEnvironment);
         
         BeDropped(dropPosition, throwVelocity);
     }
@@ -255,7 +260,5 @@ public class Interactable : MonoBehaviour
             Debug.LogWarning("Attempted to use an interactable that is PickupDropOnly. This is not allowed.");
             return;
         }
-        
-        Debug.Log("Used");
     }
 }

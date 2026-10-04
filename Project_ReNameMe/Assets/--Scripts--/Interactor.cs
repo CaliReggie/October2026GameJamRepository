@@ -76,25 +76,20 @@ public class Interactor : MonoBehaviour
                     //pickup the hovering interactable
                     SetHeldInteractable(hoveringInteractable, heldParentLocation);
                     break;
-                case Interactable.EInteractableType.UseOn:
-                    // first see if holding a useable interactable, (if not then nothing)
-                    // next see if the hovering interactable can be used on, (if not then nothing)
-                    // next verity match between use can of holding and use on hovering, (if not then nothing)
-                    // lastly, use the hovering interactable with the holding interactable,
-                    if (heldInteractable != null && heldInteractable.InteractableType == Interactable.EInteractableType.PickupUseDrop)
+                
+                case Interactable.EInteractableType.UseOnly:
+                    // try to use the held interactable on the hovering interactable
+                    if (Interactable.CanUseUseOnInteractable(hoveringInteractable, heldInteractable))
                     {
-                        if (Interactable.CanUseUseOnInteractable(hoveringInteractable, heldInteractable))
-                        {
-                            hoveringInteractable.Use();
-                        }
+                        hoveringInteractable.Use();
                     }
                     break;
             }
             
             
         }
-        // might be holding a useable pickup interactable, if so then use it
-        else if (heldInteractable != null && Interactable.CanUsePickupInteractable(heldInteractable))
+        // try to use possible held interactable
+        else if (Interactable.CanUsePickupInteractable(heldInteractable))
         {
             heldInteractable.Use();;
         }
