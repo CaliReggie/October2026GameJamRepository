@@ -179,7 +179,7 @@ MonoBehaviour:
   playerObjectPio: {fileID: 0}
   interactableLayerMask:
     serializedVersion: 2
-    m_Bits: 134217728
+    m_Bits: 134217792
   interactRaycastDistance: 3
   interactRaycastRadius: 0.2
   maxDistanceFromObjectToInteract: 0.5
