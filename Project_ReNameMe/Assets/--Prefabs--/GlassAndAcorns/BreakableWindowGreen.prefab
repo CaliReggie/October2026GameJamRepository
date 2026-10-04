@@ -24,13 +24,17 @@ PrefabInstance:
       propertyPath: breakForceThreshold
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 474270886900811827, guid: 312c2475757f3d449bc5791d854de9f8, type: 3}
+      propertyPath: m_Size.z
+      value: 0.1
+      objectReference: {fileID: 0}
     - target: {fileID: 1071226937495105520, guid: 312c2475757f3d449bc5791d854de9f8, type: 3}
       propertyPath: 'm_Materials.Array.data[2]'
       value: 
       objectReference: {fileID: 2100000, guid: 00ccc66bbe30d4d4d89a83f50ec5f995, type: 2}
     - target: {fileID: 1575485029253254693, guid: 312c2475757f3d449bc5791d854de9f8, type: 3}
       propertyPath: m_Name
-      value: SM_Bld_Base_Wall_Window_01 Variant
+      value: BreakableWindowGreen
       objectReference: {fileID: 0}
     - target: {fileID: 2204212838617470111, guid: 312c2475757f3d449bc5791d854de9f8, type: 3}
       propertyPath: m_LocalPosition.x
@@ -42,7 +46,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2204212838617470111, guid: 312c2475757f3d449bc5791d854de9f8, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 3.98
+      value: 4.81
       objectReference: {fileID: 0}
     - target: {fileID: 2204212838617470111, guid: 312c2475757f3d449bc5791d854de9f8, type: 3}
       propertyPath: m_LocalRotation.w
