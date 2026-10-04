@@ -154,6 +154,8 @@ public class PlayerObjectPioComponent : PioComponent
     
     [SerializeField] private Slider healthSlider;
 
+    [SerializeField] private Image healthRefreshImage;
+
     [SerializeField] private Interactor interactor;
 
     public bool IsIncapacitated => currentHealth <= 0;
@@ -584,6 +586,11 @@ public class PlayerObjectPioComponent : PioComponent
             healthSlider.value = (float)currentHealth / BaseHealth;
         }
         
+        if (healthRefreshImage != null)
+        {
+            healthRefreshImage.fillAmount = 0f;
+        }
+        
         animator.SetBool(idleAnimatorHash, false);
         animator.SetBool(walkingAnimatorHash, false);
         animator.SetBool(jumpingAnimatorHash, false);
@@ -717,6 +724,26 @@ public class PlayerObjectPioComponent : PioComponent
                 if (healthRegenTickTimer <= 0f && currentHealth < BaseHealth)
                 {
                     HealForHealth(1);
+                    
+                    healthRegenTickTimer = healthRegenTickDuration;
+                }
+                
+                if (healthRefreshImage != null)
+                {
+                    if (currentHealth >= BaseHealth)
+                    {
+                        healthRefreshImage.fillAmount = 0f;
+                        
+                        healthRegenTickTimer = 0f;
+                    }
+                    else if (IsIncapacitated)
+                    {
+                        healthRefreshImage .fillAmount = 1f - (healthRegenTickTimer / incapacitatedDuration);
+                    }
+                    else
+                    {
+                        healthRefreshImage.fillAmount = 1f - (healthRegenTickTimer / healthRegenTickDuration);
+                    }
                 }
             }
             
