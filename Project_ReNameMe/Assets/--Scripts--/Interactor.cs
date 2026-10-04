@@ -94,7 +94,8 @@ public class Interactor : MonoBehaviour
             
             
         }
-        else if (heldInteractable != null && heldInteractable.InteractableType == Interactable.EInteractableType.PickupUseDrop)
+        // might be holding a useable pickup interactable, if so then use it
+        else if (heldInteractable != null && Interactable.CanUsePickupInteractable(heldInteractable))
         {
             heldInteractable.Use();;
         }

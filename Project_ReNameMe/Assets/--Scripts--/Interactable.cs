@@ -15,22 +15,87 @@ public class Interactable : MonoBehaviour
         Cutting // need cutting use pickup interactable and cutting use on interactable
     }
     
-    // public static void CanUseUseOnInteractable(Interactable useOn, Interactable )
-    // {
-    //     if (usePickup == null || useOn == null)
-    //     {
-    //         Debug.LogWarning("Attempted to use a UseOn interactable with a null UsePickup or UseOn interactable.");
-    //         return;
-    //     }
-    //     
-    //     if (usePickup.useInteractionType != useOn.useInteractionType)
-    //     {
-    //         Debug.LogWarning("Attempted to use a UseOn interactable with a UsePickup interactable that does not match the UseInteractionType.");
-    //         return;
-    //     }
-    //     
-    //     Debug.Log($"Used {usePickup.name} on {useOn.name}");
-    // }
+    public static bool CanUsePickupInteractable(Interactable useableInteractable, Interactable useOnInteractable = null)
+    {
+        if (useableInteractable == null)
+        {
+            return false;
+        }
+        
+        if (useableInteractable.InteractableType != EInteractableType.PickupUseDrop)
+        {
+            return false;
+        }
+        
+        switch (useableInteractable.UseInteractionType)
+        {
+            case EUseInteractionType.Basic:
+                return true;
+            
+            case EUseInteractionType.Cutting:
+                
+                if (useOnInteractable == null)
+                {
+                    return false;
+                }
+                
+                if (useOnInteractable.InteractableType != EInteractableType.UseOn)
+                {
+                    return false;
+                }
+                
+                if (useOnInteractable.UseInteractionType != EUseInteractionType.Cutting)
+                {
+                    return false;
+                }
+
+                return true;
+            
+            default:
+                return false;
+        }
+    }
+    
+    public static bool CanUseUseOnInteractable(Interactable useOn, Interactable usableInteractable = null)
+    {
+        if (useOn == null)
+        {
+            return false;
+        }
+        
+        if (useOn.InteractableType != EInteractableType.UseOn)
+        {
+            return false;
+        }
+
+        switch (useOn.UseInteractionType)
+        {
+            case EUseInteractionType.Basic:
+                return true;
+            
+            case EUseInteractionType.Cutting:
+                
+                if (usableInteractable == null)
+                {
+                    return false;
+                }
+                
+                if (usableInteractable.InteractableType != EInteractableType.PickupUseDrop)
+                {
+                    return false;
+                }
+                
+                if (usableInteractable.UseInteractionType != EUseInteractionType.Cutting)
+                {
+                    return false;
+                }
+
+                return true;
+            
+            default:
+                return false;
+        }
+    }
     
     [Header("Inscribed")]
     
@@ -55,6 +120,8 @@ public class Interactable : MonoBehaviour
     [field: SerializeField] public bool IsHeld { get; private set; }
     
     public EInteractableType InteractableType => interactableType;
+    
+    public EUseInteractionType UseInteractionType => useInteractionType;
     
     protected virtual void Start()
     {
