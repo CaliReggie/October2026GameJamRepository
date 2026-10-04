@@ -558,6 +558,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 67db9e8f0e2ae9c40bc1e2b64352a6b4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &4909474566375794394 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 6927189601881286925, guid: 3d39c96073db23e43b3a15fe29585adf, type: 3}
+  m_PrefabInstance: {fileID: 2595101596195819479}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!223 &5565192304120912355 stripped
 Canvas:
   m_CorrespondingSourceObject: {fileID: 7581862529195857460, guid: 3d39c96073db23e43b3a15fe29585adf, type: 3}
@@ -961,6 +972,10 @@ PrefabInstance:
       propertyPath: healthSlider
       value: 
       objectReference: {fileID: 3535398964461054791}
+    - target: {fileID: 915111102734727183, guid: e33d25cb27e57374d801567e80d0cb26, type: 3}
+      propertyPath: healthRefreshImage
+      value: 
+      objectReference: {fileID: 4909474566375794394}
     - target: {fileID: 3333803076317224354, guid: e33d25cb27e57374d801567e80d0cb26, type: 3}
       propertyPath: m_Name
       value: PlayerObject
