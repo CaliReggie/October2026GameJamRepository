@@ -183,6 +183,7 @@ MonoBehaviour:
   interactRaycastDistance: 3
   interactRaycastRadius: 0.2
   maxDistanceFromObjectToInteract: 0.5
+  shootDropForce: 15
   hoveringInteractable: {fileID: 0}
   lastHoveringInteractable: {fileID: 0}
   heldInteractable: {fileID: 0}

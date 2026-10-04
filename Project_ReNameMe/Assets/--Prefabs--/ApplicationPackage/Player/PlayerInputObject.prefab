@@ -398,10 +398,6 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 6955858071431466768, guid: af5b138031974834a9575b23efe86325, type: 3}
-      propertyPath: CollideAgainst.m_Bits
-      value: 14680193
-      objectReference: {fileID: 0}
     - target: {fileID: 8668862069068693718, guid: af5b138031974834a9575b23efe86325, type: 3}
       propertyPath: m_Name
       value: ThirdPersonOrbitVirtual
@@ -775,30 +771,6 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 2406139996449952472}
     m_Modifications:
-    - target: {fileID: 892416064042074894, guid: c17233956aaa4cd46a13aa417bf55f0f, type: 3}
-      propertyPath: CameraDistance
-      value: 0.75
-      objectReference: {fileID: 0}
-    - target: {fileID: 892416064042074894, guid: c17233956aaa4cd46a13aa417bf55f0f, type: 3}
-      propertyPath: ShoulderOffset.x
-      value: 0.1
-      objectReference: {fileID: 0}
-    - target: {fileID: 892416064042074894, guid: c17233956aaa4cd46a13aa417bf55f0f, type: 3}
-      propertyPath: ShoulderOffset.y
-      value: 0.25
-      objectReference: {fileID: 0}
-    - target: {fileID: 892416064042074894, guid: c17233956aaa4cd46a13aa417bf55f0f, type: 3}
-      propertyPath: VerticalArmLength
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 892416064042074894, guid: c17233956aaa4cd46a13aa417bf55f0f, type: 3}
-      propertyPath: AvoidObstacles.CameraRadius
-      value: 0.01
-      objectReference: {fileID: 0}
-    - target: {fileID: 892416064042074894, guid: c17233956aaa4cd46a13aa417bf55f0f, type: 3}
-      propertyPath: AvoidObstacles.CollisionFilter.m_Bits
-      value: 14680193
-      objectReference: {fileID: 0}
     - target: {fileID: 1398789396281642310, guid: c17233956aaa4cd46a13aa417bf55f0f, type: 3}
       propertyPath: m_Name
       value: ThirdPersonFixedVirtual
@@ -919,10 +891,6 @@ PrefabInstance:
     - target: {fileID: 1303196832769275710, guid: 095c3ad28e040ae42b85886f477f0edf, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 2910991989454862909, guid: 095c3ad28e040ae42b85886f477f0edf, type: 3}
-      propertyPath: shootDropForce
-      value: 15
       objectReference: {fileID: 0}
     - target: {fileID: 2910991989454862909, guid: 095c3ad28e040ae42b85886f477f0edf, type: 3}
       propertyPath: playerObjectPio
