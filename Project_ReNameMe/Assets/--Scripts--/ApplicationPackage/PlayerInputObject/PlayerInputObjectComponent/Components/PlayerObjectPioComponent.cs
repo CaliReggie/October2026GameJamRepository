@@ -3,6 +3,7 @@ using System;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.Serialization;
+using UnityEngine.UI;
 
 /// <summary>
 /// The PlayerObjectPioComponent extends PioComponent to manage the player object GameObject. Includes a basic
@@ -150,6 +151,8 @@ public class PlayerObjectPioComponent : PioComponent
     [SerializeField] private float healthRegenTickTimer;
 
     [SerializeField] private GameObject incapacitatedEffectGameObject;
+    
+    [SerializeField] private Slider healthSlider;
 
     public bool IsIncapacitated => currentHealth <= 0;
     
@@ -307,7 +310,9 @@ public class PlayerObjectPioComponent : PioComponent
                 healthRegenTickTimer = incapacitatedDuration;
                 
                 incapacitatedEffectGameObject.SetActive(true);
-                
+
+                PlayerManager.Instance.CheckGameOverLost();
+
                 //todo: became incapacitated stuff
             }
         }
@@ -317,6 +322,11 @@ public class PlayerObjectPioComponent : PioComponent
             healthRegenTickTimer = healthRegenTickDuration;
             
             //todo: get hit stuff
+        }
+        
+        if (healthSlider != null)
+        {
+            healthSlider.value = (float)currentHealth / BaseHealth;
         }
     }
     
@@ -337,6 +347,11 @@ public class PlayerObjectPioComponent : PioComponent
         if (currentHealth < BaseHealth)
         {
             healthRegenTickTimer = healthRegenTickDuration;
+        }
+        
+        if (healthSlider != null)
+        {
+            healthSlider.value = (float)currentHealth / BaseHealth;
         }
     }
     
@@ -556,6 +571,11 @@ public class PlayerObjectPioComponent : PioComponent
 
         healthRegenTickTimer = 0;
         
+        if (healthSlider != null)
+        {
+            healthSlider.value = (float)currentHealth / BaseHealth;
+        }
+        
         animator.SetBool(idleAnimatorHash, false);
         animator.SetBool(walkingAnimatorHash, false);
         animator.SetBool(jumpingAnimatorHash, false);
@@ -582,6 +602,8 @@ public class PlayerObjectPioComponent : PioComponent
         // cannot move if not initialized
         if (!Initialized) { return; }
 
+        if (IsIncapacitated) { return; }
+        
         ManageMove();
 
         ManageRotation();
@@ -591,8 +613,6 @@ public class PlayerObjectPioComponent : PioComponent
         void ManageMove()
         {
             // playerObjectRigidbody.linearVelocity = targetMove;
-            
-            if (IsIncapacitated) { return; }
             
             // jump can be requested with variable conditions so check that first
             if (JumpRequested)

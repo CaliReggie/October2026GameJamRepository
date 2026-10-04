@@ -772,6 +772,30 @@ public class PlayerManager : BaseStateManagerApplicationListener<PlayerManager, 
     public bool CharactersAssigned => SmallSquirrelAssignedPlayerVisualIndex != -1
                                       && BigSquirrelAssignedPlayerVisualIndex != -1;
     
+    public void CheckGameOverLost()
+    {
+        if (context.NumPlayers == 0)
+        {
+            return;
+        }
+        
+        bool allIncapacitated = true;
+        
+        foreach (var player in context.playerInputObjects)
+        {
+            if (player != null && !player.GetComponentInChildren<PlayerObjectPioComponent>().IsIncapacitated)
+            {
+                allIncapacitated = false;
+                break;
+            }
+        }
+        
+        if (allIncapacitated)
+        {
+            GameManager.Instance?.GameOver(false);
+        }
+    }
+    
     /// <summary>
     /// The current PlayerManagerSettingsSo in use by the PlayerManager.
     /// </summary>
