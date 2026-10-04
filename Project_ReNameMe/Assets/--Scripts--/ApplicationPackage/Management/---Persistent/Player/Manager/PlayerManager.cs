@@ -779,6 +779,29 @@ public class PlayerManager : BaseStateManagerApplicationListener<PlayerManager, 
         Invoke(nameof(GameOverCheck), 2.5f);
     }
     
+    public Vector3 GetPositionOfOtherPlayer(int requestingPlayerVisualIndex)
+    {
+        if (requestingPlayerVisualIndex == SmallSquirrelAssignedPlayerVisualIndex)
+        {
+            PlayerInputObject bigSquirrelPlayer = GetPlayer(BigSquirrelAssignedPlayerVisualIndex);
+            if (bigSquirrelPlayer != null)
+            {
+                return bigSquirrelPlayer.GetComponentInChildren<PlayerObjectPioComponent>().transform.position;
+            }
+        }
+        else if (requestingPlayerVisualIndex == BigSquirrelAssignedPlayerVisualIndex)
+        {
+            PlayerInputObject smallSquirrelPlayer = GetPlayer(SmallSquirrelAssignedPlayerVisualIndex);
+            if (smallSquirrelPlayer != null)
+            {
+                return smallSquirrelPlayer.GetComponentInChildren<PlayerObjectPioComponent>().transform.position;
+            }
+        }
+
+        // If the requesting player is not assigned or the other player is not found, return a default position
+        return Vector3.zero;
+    }
+    
     private void GameOverCheck()
     {
         if (context.NumPlayers == 0)
