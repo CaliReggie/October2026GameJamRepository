@@ -319,7 +319,7 @@ MonoBehaviour:
   playerObjectCollider: {fileID: 2690011604884406067}
   groundedLayers:
     serializedVersion: 2
-    m_Bits: 4225217
+    m_Bits: 4225153
   raycastYOffset: 0.01
   raycastRadius: 0.1
   raycastExtraDistance: 0.01
@@ -342,6 +342,12 @@ MonoBehaviour:
   wasGrounded: 0
   jumpBufferTimer: 0
   jumpCoyoteBufferTimer: 0
+  lockedInPlaceLeniencyDuration: 0.35
+  lockedInPlaceLeniencyTimer: 0
+  isLockedInPlace: 0
+  wasLockedInPlace: 0
+  maximumLockedInPlaceInteractionAngle: 75
+  lockedInPlaceBounceHeight: 3
 --- !u!114 &3925744941715817881
 MonoBehaviour:
   m_ObjectHideFlags: 0

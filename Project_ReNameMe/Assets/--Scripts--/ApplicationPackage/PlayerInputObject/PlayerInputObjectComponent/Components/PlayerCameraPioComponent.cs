@@ -165,6 +165,19 @@ public class PlayerCameraPioComponent : PioComponent
     public Transform CurrentLookOrientation => CurrentCameraType == EPlayerCameraType.SceneCamera ? 
         currentSceneCameraScript.Camera.transform : playerObjectLookOrientation;
     
+    //ADDED FOR SQUIRREL GAME
+    public void SetLockedInPlaceCam(bool isLockedInPlace) // true means third fixed, false means third orbit
+    {
+        if (isLockedInPlace)
+        {
+            ConfigureCamera(EPlayerCameraType.PlayerThirdFixed, playerObjectCameraPosition);
+        }
+        else
+        {
+            ConfigureCamera(EPlayerCameraType.PlayerThirdOrbit, playerObjectCameraPosition);
+        }
+    }
+    
     /// <summary>
     /// Ensures certain settings are correct
     /// </summary>

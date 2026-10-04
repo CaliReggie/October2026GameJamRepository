@@ -50,13 +50,20 @@ public class PlayerObjectPioComponent : PioComponent
     [Tooltip("The extra distance from the bottom of the player object collider that the raycast will check for grounded.")]
     [SerializeField] private float raycastExtraDistance = 0.01f;
     
+    private readonly int idleAnimatorHash = Animator.StringToHash("isIdle");
     
-    private readonly int movingAnimatorHash = Animator.StringToHash("isMoving");
+    private readonly int walkingAnimatorHash = Animator.StringToHash("isWalking");
+    
+    private readonly int jumpingAnimatorHash = Animator.StringToHash("isJumping");
+    
+    private readonly int fallingAnimatorHash = Animator.StringToHash("isFalling");
     
     private readonly int groundedAnimatorHash = Animator.StringToHash("isGrounded");
     
+    private readonly int lockedInPlaceAnimatorHash = Animator.StringToHash("isLockedInPlace");
+    
     private readonly int flippedAnimatorHash = Animator.StringToHash("flipped");
-
+    
     [Header("Inscribed Settings")]
     
     [Tooltip("The speed and which player object will move when move controls are used.")]
@@ -120,6 +127,19 @@ public class PlayerObjectPioComponent : PioComponent
     [SerializeField] private float jumpCoyoteBufferTimer;
     
     //ADDED FOR SQUIRREL GAME
+    [SerializeField] private float lockedInPlaceLeniencyDuration = 0.1f;
+
+    [SerializeField] private float lockedInPlaceLeniencyTimer;
+    
+    [SerializeField] private bool isLockedInPlace;
+
+    [SerializeField] private bool wasLockedInPlace;
+    
+    [SerializeField] private float maximumLockedInPlaceInteractionAngle = 45f;
+
+    [SerializeField]
+    private float lockedInPlaceBounceHeight = 4.5f;
+    
     public Animator Animator { get => animator; set => animator = value; }
     
     public float RayCastRadius
@@ -245,6 +265,14 @@ public class PlayerObjectPioComponent : PioComponent
         if (buttonValue.isPressed)
         {
             jumpBufferTimer = jumpBufferDuration;
+        }
+    }
+    
+    public void OnLockInPlace(InputValue buttonValue)
+    {
+        if (buttonValue.isPressed)
+        {
+            isLockedInPlace = !isLockedInPlace;
         }
     }
     
@@ -453,6 +481,8 @@ public class PlayerObjectPioComponent : PioComponent
         
         jumpCoyoteBufferTimer = 0f;
         
+        lockedInPlaceLeniencyTimer = 0f;
+        
         // object rigidbody should be reset
         if (!playerObjectRigidbody.isKinematic)
         {
@@ -460,7 +490,24 @@ public class PlayerObjectPioComponent : PioComponent
             playerObjectRigidbody.angularVelocity = Vector3.zero;
         }
         
+        animator.SetBool(idleAnimatorHash, false);
+        animator.SetBool(walkingAnimatorHash, false);
+        animator.SetBool(jumpingAnimatorHash, false);
+        animator.SetBool(fallingAnimatorHash, false);
+        animator.SetBool(groundedAnimatorHash, false);
+        animator.SetBool(lockedInPlaceAnimatorHash, false);
+        
         HandleChangeState(EPlayerObjectState.Idle);
+        
+        //ADDED FOR SQUIRREL GAME
+        
+        
+        isLockedInPlace = false;
+        
+        if (Pio.IsSmallSquirrel)
+        {
+            playerCameraComponent.SetLockedInPlaceCam(false);
+        }
     }
     
     private void FixedUpdate()
@@ -508,6 +555,7 @@ public class PlayerObjectPioComponent : PioComponent
         {
             // logic variable based on camera type and if player object should face move direction
             bool shouldPoFaceMoveDirection = 
+                !isLockedInPlace ||
                 (playerCameraComponent.CurrentCameraType == PlayerCameraPioComponent.EPlayerCameraType.PlayerThirdOrbit ||
                  playerCameraComponent.CurrentCameraType == PlayerCameraPioComponent.EPlayerCameraType.SceneCamera ||
                 playerCameraComponent.CurrentCameraType == PlayerCameraPioComponent.EPlayerCameraType.PlayerFixed);
@@ -550,6 +598,8 @@ public class PlayerObjectPioComponent : PioComponent
         ManageCooldownsAndTimers();
 
         ManageGrounded();
+        
+        ManageLockedInPlace();
 
         ManageOrientedInput();
 
@@ -614,6 +664,44 @@ public class PlayerObjectPioComponent : PioComponent
             
             wasGrounded = isGrounded;
         }
+        
+        void ManageLockedInPlace()
+        {
+            if (lockedInPlaceLeniencyTimer > 0f)
+            {
+                lockedInPlaceLeniencyTimer -= Time.deltaTime;
+            }
+            
+            if (isLockedInPlace && !wasLockedInPlace)
+            {
+                lockedInPlaceLeniencyTimer = lockedInPlaceLeniencyDuration;
+                
+                if (Pio.IsBigSquirrel)
+                {
+                    animator.SetTrigger(flippedAnimatorHash);
+                }
+                else if (Pio.IsSmallSquirrel)
+                {
+                    playerCameraComponent.SetLockedInPlaceCam(true);
+                }
+            }
+            else if (!isLockedInPlace && wasLockedInPlace)
+            {
+                lockedInPlaceLeniencyTimer = 0f;
+                
+                if (Pio.IsSmallSquirrel)
+                {
+                    playerCameraComponent.SetLockedInPlaceCam(false);
+                }
+            }
+
+            wasLockedInPlace = isLockedInPlace;
+            
+            if (lockedInPlaceLeniencyTimer <= 0f && isLockedInPlace && rawMoveInput.magnitude > 0f)
+            {
+                isLockedInPlace = false;
+            }
+        }
 
         void ManageOrientedInput()
         {
@@ -629,6 +717,13 @@ public class PlayerObjectPioComponent : PioComponent
 
         void ManageTargetMove()
         {
+            if (isLockedInPlace)
+            {
+                targetMove = Vector3.zero;
+                
+                return;
+            }
+            
             // lateral management
             targetMove.x = orientedMoveInput.x * walkSpeed;
             
@@ -670,9 +765,13 @@ public class PlayerObjectPioComponent : PioComponent
 
             EPlayerObjectState targetState;
             
+            animator.SetBool(groundedAnimatorHash, isGrounded);
+        
+            animator.SetBool(lockedInPlaceAnimatorHash, isLockedInPlace);
+            
             if (isGrounded)
             {
-                // if grounded and trying to move walking
+                // if grounded and trying to move walkingAnimatorHash
                 if (orientedMoveInput.magnitude > 0f)
                 {
                     targetState = EPlayerObjectState.Walking;
@@ -732,13 +831,16 @@ public class PlayerObjectPioComponent : PioComponent
             case EPlayerObjectState.Inactive:
                 break;
             case EPlayerObjectState.Idle:
+                animator.SetBool(idleAnimatorHash, false);
                 break;
             case EPlayerObjectState.Walking:
-                animator.SetBool(movingAnimatorHash, false);
+                animator.SetBool(walkingAnimatorHash, false);
                 break;
             case EPlayerObjectState.Jumping:
+                animator.SetBool(jumpingAnimatorHash, false);
                 break;
             case EPlayerObjectState.Falling:
+                animator.SetBool(fallingAnimatorHash, false);
                 break;
         }
         
@@ -748,18 +850,65 @@ public class PlayerObjectPioComponent : PioComponent
             case EPlayerObjectState.Inactive:
                 break;
             case EPlayerObjectState.Idle:
+                animator.SetBool(idleAnimatorHash, true);
                 break;
             case EPlayerObjectState.Walking:
-                animator.SetBool(movingAnimatorHash, true);
+                animator.SetBool(walkingAnimatorHash, true);
                 break;
             case EPlayerObjectState.Jumping:
+                animator.SetBool(jumpingAnimatorHash, true);
                 break;
             case EPlayerObjectState.Falling:
+                animator.SetBool(fallingAnimatorHash, true);
                 break;
         }
         
         currentState = toState;
+    }
+    
+    private void OnCollisionEnter(Collision collision)
+    {
+        //want to check for other player hit
+        PlayerObjectPioComponent otherPlayerObjectPioComponent = collision.gameObject.GetComponent<PlayerObjectPioComponent>();
         
-        animator.SetBool(groundedAnimatorHash, isGrounded);
+        if (otherPlayerObjectPioComponent == null 
+            || !otherPlayerObjectPioComponent.isLockedInPlace
+            || !IsAboveOtherPlayer(otherPlayerObjectPioComponent))
+        {
+            return;
+        }
+        
+        // small checks for landing on top of big squirrel, while big squirrel is locked in place, and bounces off
+        if (Pio.IsSmallSquirrel && otherPlayerObjectPioComponent.Pio.IsBigSquirrel)
+        {
+            playerObjectRigidbody.AddForce(Vector3.up * Mathf.Sqrt(2f * lockedInPlaceBounceHeight * -Physics.gravity.y), ForceMode.VelocityChange);
+
+        }
+        // big checks for landing on top of small squirrel, while small squirrel is locked in place, and tries
+        // to make it shoot out a held item if it has one
+        else if (Pio.IsBigSquirrel && otherPlayerObjectPioComponent.Pio.IsSmallSquirrel)
+        {
+            Interactor otherInteractor = otherPlayerObjectPioComponent.Pio.GetComponentInChildren<Interactor>();
+            
+            if (otherInteractor != null)
+            {
+                otherInteractor.TryShootRemoveHeldInteractable();
+            }
+            else
+            {
+                Debug.LogError($"{GetType().Name}: Other player object interactor is null.");
+            }
+        }
+
+        return;
+        
+        bool IsAboveOtherPlayer(PlayerObjectPioComponent other)
+        {
+            Vector3 dirFromOther = (playerObject.position - other.playerObject.position).normalized;
+            
+            float angleToOther = Vector3.Angle(Vector3.up, dirFromOther);
+            
+            return angleToOther <= maximumLockedInPlaceInteractionAngle;
+        }
     }
 }

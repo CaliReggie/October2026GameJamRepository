@@ -17,6 +17,8 @@ public class Interactor : MonoBehaviour
     [SerializeField] private float interactRaycastRadius = 0.1f;
 
     [SerializeField] private float maxDistanceFromObjectToInteract = 0.5f;
+
+    [SerializeField] private float shootDropForce = 10f;
     
     [Header("Dynamic")]
     
@@ -30,7 +32,13 @@ public class Interactor : MonoBehaviour
 
     [SerializeField] private Transform dropLocation;
     
-    
+    public void TryShootRemoveHeldInteractable()
+    {
+        if (heldInteractable != null)
+        {
+            RemoveHeldInteractable(dropLocation, cameraObject.transform.forward * shootDropForce);
+        }
+    }
 
     private void Start()
     {
