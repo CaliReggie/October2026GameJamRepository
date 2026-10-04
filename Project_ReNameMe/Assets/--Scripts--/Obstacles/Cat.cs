@@ -99,6 +99,8 @@ public class Cat : MonoBehaviour
     {
         if (targetedPlayer != null && canSeePlayer)
         {
+            targetedPlayer.TryGetComponent<PlayerObjectPioComponent>(out var player);
+            if (player.IsIncapacitated) ChangeStates(CatState.Patrol);
             agent.speed = chaseSpeed;
             agent.SetDestination(targetedPlayer.transform.position);
         }

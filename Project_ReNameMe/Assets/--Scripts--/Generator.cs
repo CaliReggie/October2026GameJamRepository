@@ -11,6 +11,11 @@ public class Generator : MonoBehaviour
     [SerializeField] private GeneratorButton[] buttonOrder;
     [SerializeField] private List<GeneratorButton> buttonsPressed;
     [SerializeField] private GeneratorButton[] buttonList;
+
+    [SerializeField] private Renderer[] lights;
+
+    [SerializeField] Material GreenLight;
+    [SerializeField] Material RedLight;
     [SerializeField] private int nextButtonIndex;
     [SerializeField] GeneratorButton nextButton;
 
@@ -59,6 +64,7 @@ public class Generator : MonoBehaviour
         if (nextButton == button)
         {
             buttonsPressed.Add(button);
+            lights[nextButtonIndex].material = GreenLight;
             return true;
         }
         else
@@ -76,6 +82,11 @@ public class Generator : MonoBehaviour
             nextButtonIndex = 0;
             nextButton = buttonOrder[nextButtonIndex];
             buttonsPressed.Clear();
+        }
+
+        foreach (var light in lights)
+        {
+            light.material = RedLight;
         }
     }
 
