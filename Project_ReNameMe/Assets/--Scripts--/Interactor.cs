@@ -124,6 +124,11 @@ public class Interactor : MonoBehaviour
         {
             Interactable interactable = hit.collider.GetComponent<Interactable>();
             
+            if (interactable == null)
+            {
+                interactable = hit.collider.GetComponentInParent<Interactable>();
+            }
+            
             if (interactable != null && interactable != heldInteractable && interactable != playerObjectReviveInteractable)
             {
                 float distanceToInteractable = Vector3.Distance(playerObjectPio.transform.position, hit.point);
