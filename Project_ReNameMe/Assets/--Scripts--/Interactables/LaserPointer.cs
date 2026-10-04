@@ -8,6 +8,7 @@ public class LaserPointer : Interactable
 
     [SerializeField] float batteryDrainSpeed = 1;
 
+    [SerializeField] Transform laserOrigin;
     [SerializeField] GameObject fakePlayer;
     [SerializeField] LayerMask layers;
 
@@ -50,9 +51,10 @@ public class LaserPointer : Interactable
             PlayerInputObject playerInput = GetComponentInParent<PlayerInputObject>();
             Camera cam = playerInput.GetComponentInChildren<Camera>();
             Ray ray = new Ray(cam.transform.position, cam.transform.forward);
-
-            if (Physics.Raycast(ray, out RaycastHit hit, layers))
+            Debug.DrawLine(cam.transform.position, cam.transform.position + cam.transform.forward * 1000);
+            if (Physics.Raycast(ray, out RaycastHit hit, 100000, layers))
             {
+                lineRenderer.SetPosition(0, laserOrigin.position);
                 lineRenderer.SetPosition(1, hit.point);
             }
         }

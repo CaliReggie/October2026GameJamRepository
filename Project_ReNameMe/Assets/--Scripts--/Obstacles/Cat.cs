@@ -4,13 +4,15 @@ using UnityEngine.AI;
 
 public class Cat : MonoBehaviour
 {
-    public enum CatState { Patrol, Chasing}
+    public enum CatState { Patrol, Chasing, Attacking, Waiting}
 
     [Header("Stats")]
     [SerializeField] float patrolSpeed;
     [SerializeField] float chaseSpeed;
     [SerializeField] float lineOfSightDist;
     [SerializeField] float spherecastRadius;
+
+    [SerializeField] float attackDist = 1;
 
     [SerializeField] float searchDuration;
     [SerializeField] float searchTimer;
@@ -23,6 +25,8 @@ public class Cat : MonoBehaviour
     [SerializeField] Vector3 target;
 
     [SerializeField] GameObject targetedPlayer;
+
+    [SerializeField] Animator animator;
 
     [SerializeField] bool canSeePlayer = false;
 
@@ -53,7 +57,29 @@ public class Cat : MonoBehaviour
 
         switch (newState)
         {
+            case CatState.Attacking: agent.isStopped = true;
+                Vector3 lookPos = targetedPlayer.transform.position;
+                lookPos.y = transform.position.y;
+                lookPos.z = transform.position.z;
+                transform.LookAt(lookPos);
+                animator.SetTrigger("Swipe");
+                StartCoroutine(AttackRoutine());
+                break;
 
+            case CatState.Patrol: agent.isStopped = false;
+                animator.SetFloat("Vert", 1);
+                animator.SetFloat("State", 0);
+                break;
+
+            case CatState.Chasing: agent.isStopped = false;
+                animator.SetFloat("Vert", 1);
+                animator.SetFloat("State", 1);
+                break;
+
+            case CatState.Waiting: agent.isStopped = true;
+                animator.SetFloat("Vert", 0);
+                animator.SetFloat("State", 0);
+                break;
         }
     }
 
@@ -81,6 +107,18 @@ public class Cat : MonoBehaviour
         {
             if (searchRoutine == null) searchRoutine = StartCoroutine(SearchRoutine());
         }
+
+        if (Vector3.Distance(transform.position, targetedPlayer.transform.position) < attackDist)
+        {
+            ChangeStates(CatState.Attacking);
+        }
+    }
+
+    IEnumerator AttackRoutine()
+    {
+        yield return new WaitForSeconds(1);
+        if (canSeePlayer) ChangeStates(CatState.Chasing);
+        else ChangeStates(CatState.Patrol);
     }
 
     void Patrol()
@@ -90,7 +128,7 @@ public class Cat : MonoBehaviour
         if (Vector3.Distance(transform.position, patrolPoints[currentPointIndex].transform.position) < 1)
         {
             Debug.Log("Arrived At Point");
-
+            ChangeStates(CatState.Waiting);
             if (waitAtPointRoutine == null) waitAtPointRoutine = StartCoroutine(WaitAtPatrolPoint());
         }
         else
@@ -133,6 +171,7 @@ public class Cat : MonoBehaviour
     {
         yield return new WaitForSeconds(timeBeforeNextPoint);
         NewPatrolPoint();
+        ChangeStates(CatState.Patrol);
         waitAtPointRoutine = null;
     }
 
