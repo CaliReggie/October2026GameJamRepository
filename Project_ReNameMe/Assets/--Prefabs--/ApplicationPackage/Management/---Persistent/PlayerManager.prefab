@@ -760,6 +760,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   debugMode: 0
+  defeatSFX: {fileID: 8310808343354700048, guid: 900f8fb378da33248a9c185da5a4028e, type: 3}
   context:
     defaultPlayerManagerSettings: {fileID: 11400000, guid: 637227840297d493aa8e699669a7466c, type: 2}
     playerInputObjectPrefab: {fileID: 1706744786136297732, guid: f3f94d797f5cd0a47bf5de69850fad8e, type: 3}

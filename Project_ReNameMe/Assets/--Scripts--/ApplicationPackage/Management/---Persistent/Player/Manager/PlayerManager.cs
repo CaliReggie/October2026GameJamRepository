@@ -753,6 +753,8 @@ public class PlayerManager : BaseStateManagerApplicationListener<PlayerManager, 
             OnCharacterAssignmentChanged?.Invoke();
         }
     }
+
+    [SerializeField] private AudioSource defeatSFX;
     
     private int bigSquirrelAssignedPlayerVisualIndex = -1;
     public int BigSquirrelAssignedPlayerVisualIndex {
@@ -797,6 +799,7 @@ public class PlayerManager : BaseStateManagerApplicationListener<PlayerManager, 
         
         if (allIncapacitated)
         {
+            defeatSFX = Instantiate(defeatSFX);
             GameManager.Instance?.GameOver(false);
         }
     }
