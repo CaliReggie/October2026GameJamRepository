@@ -30,6 +30,8 @@ using UnityEngine.Serialization;
     public float moveLerpGrounded = 1f;
     
     public float moveLerpAirborne = 0.2f;
+
+    public int health = 1;
 }
 
 public class PlayerObjectSquirrelTypeHandler : MonoBehaviour
@@ -154,6 +156,8 @@ public class PlayerObjectSquirrelTypeHandler : MonoBehaviour
         
         playerObjectPioComponent.MoveLerpGrounded = data.moveLerpGrounded;
         playerObjectPioComponent.MoveLerpAirborne = data.moveLerpAirborne;
+        
+        playerObjectPioComponent.BaseHealth = data.health;
         
         playerModel.gameObject.SetActive(true);
     }

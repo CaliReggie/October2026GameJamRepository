@@ -127,15 +127,27 @@ public class PlayerObjectPioComponent : PioComponent
     [SerializeField] private float jumpCoyoteBufferTimer;
     
     //ADDED FOR SQUIRREL GAME
-    [SerializeField] private float lockedInPlaceLeniencyDuration = 0.1f;
+    [SerializeField] private float lockedInPlaceDuration = 0.35f;
 
-    [SerializeField] private float lockedInPlaceLeniencyTimer;
+    [SerializeField] private float lockedInPlaceTimer;
     
     [SerializeField] private bool isLockedInPlace;
 
     [SerializeField] private bool wasLockedInPlace;
     
     [SerializeField] private float maximumLockedInPlaceInteractionAngle = 45f;
+
+    [field: SerializeField] public int BaseHealth { get; set; } = 1;
+
+    [SerializeField] private int currentHealth;
+    
+    [SerializeField] private float healthRegenTickDuration = 10f;
+    
+    [SerializeField] private float incapacitatedDuration = 25f;
+    
+    [SerializeField] private float healthRegenTickTimer;
+
+    public bool IsIncapacitated => currentHealth <= 0;
 
     [SerializeField]
     private float lockedInPlaceBounceHeight = 4.5f;
@@ -277,7 +289,32 @@ public class PlayerObjectPioComponent : PioComponent
     }
     
     //ADDED FOR SQUIRREL GAME
-    public void GetHitByTrap(){}
+    // public void GetHitByTrap(){}
+    
+    public void GetHitForDamage(int damageAmount)
+    {
+        int previousHealth = currentHealth;
+        
+        currentHealth -= damageAmount;
+        
+        if (currentHealth <= 0)
+        {
+            currentHealth = 0;
+            
+            if (previousHealth > 0)
+            {
+                // player just became incapacitated
+                healthRegenTickTimer = incapacitatedDuration;
+                
+                //todo: became incapacitated stuff
+            }
+        }
+        else if (currentHealth < BaseHealth)
+        {
+            // player is damaged but not incapacitated
+            healthRegenTickTimer = healthRegenTickDuration;
+        }
+    }
     
     /// <summary>
     /// Teleports the player object to the target location. Optionally also rotates to match target Euler rotation.
@@ -481,14 +518,19 @@ public class PlayerObjectPioComponent : PioComponent
         
         jumpCoyoteBufferTimer = 0f;
         
-        lockedInPlaceLeniencyTimer = 0f;
-        
         // object rigidbody should be reset
         if (!playerObjectRigidbody.isKinematic)
         {
             playerObjectRigidbody.linearVelocity = Vector3.zero;
             playerObjectRigidbody.angularVelocity = Vector3.zero;
         }
+        
+        //ADDED FOR SQUIRREL GAME
+        lockedInPlaceTimer = 0f;
+        
+        currentHealth = BaseHealth;
+
+        healthRegenTickTimer = 0;
         
         animator.SetBool(idleAnimatorHash, false);
         animator.SetBool(walkingAnimatorHash, false);
@@ -497,17 +539,16 @@ public class PlayerObjectPioComponent : PioComponent
         animator.SetBool(groundedAnimatorHash, false);
         animator.SetBool(lockedInPlaceAnimatorHash, false);
         
-        HandleChangeState(EPlayerObjectState.Idle);
-        
-        //ADDED FOR SQUIRREL GAME
-        
-        
         isLockedInPlace = false;
         
         if (Pio.IsSmallSquirrel)
         {
             playerCameraComponent.SetLockedInPlaceCam(false);
         }
+        
+        //
+        
+        HandleChangeState(EPlayerObjectState.Idle);
     }
     
     private void FixedUpdate()
@@ -524,6 +565,8 @@ public class PlayerObjectPioComponent : PioComponent
         void ManageMove()
         {
             // playerObjectRigidbody.linearVelocity = targetMove;
+            
+            if (IsIncapacitated) { return; }
             
             // jump can be requested with variable conditions so check that first
             if (JumpRequested)
@@ -611,6 +654,50 @@ public class PlayerObjectPioComponent : PioComponent
         
         void ManageCooldownsAndTimers()
         {
+            if (healthRegenTickTimer > 0f)
+            {
+                healthRegenTickTimer -= Time.deltaTime;
+                
+                if (healthRegenTickTimer <= 0f && currentHealth < BaseHealth)
+                {
+                    if (IsIncapacitated)
+                    {
+                        currentHealth = BaseHealth;
+                    }
+                    else
+                    {
+                        currentHealth++;
+                        
+                        if (currentHealth < BaseHealth)
+                        {
+                            healthRegenTickTimer = healthRegenTickDuration;
+                        }
+                        else
+                        {
+                            currentHealth = BaseHealth;
+                        }
+                    }
+                }
+            }
+            
+            if (IsIncapacitated)
+            {
+                if (healthRegenTickTimer > 0f)
+                {
+                    
+                }
+                else
+                {
+                    currentHealth = BaseHealth;
+                    
+                    healthRegenTickTimer = healthRegenTickDuration;
+                }
+            }
+            else
+            {
+                
+            }
+            
             // counting down jump cooldowns and timers
             if (jumpBufferTimer > 0f)
             {
@@ -667,14 +754,14 @@ public class PlayerObjectPioComponent : PioComponent
         
         void ManageLockedInPlace()
         {
-            if (lockedInPlaceLeniencyTimer > 0f)
+            if (lockedInPlaceTimer > 0f)
             {
-                lockedInPlaceLeniencyTimer -= Time.deltaTime;
+                lockedInPlaceTimer -= Time.deltaTime;
             }
             
             if (isLockedInPlace && !wasLockedInPlace)
             {
-                lockedInPlaceLeniencyTimer = lockedInPlaceLeniencyDuration;
+                lockedInPlaceTimer = lockedInPlaceDuration;
                 
                 if (Pio.IsBigSquirrel)
                 {
@@ -687,7 +774,7 @@ public class PlayerObjectPioComponent : PioComponent
             }
             else if (!isLockedInPlace && wasLockedInPlace)
             {
-                lockedInPlaceLeniencyTimer = 0f;
+                lockedInPlaceTimer = 0f;
                 
                 if (Pio.IsSmallSquirrel)
                 {
@@ -697,7 +784,7 @@ public class PlayerObjectPioComponent : PioComponent
 
             wasLockedInPlace = isLockedInPlace;
             
-            if (lockedInPlaceLeniencyTimer <= 0f && isLockedInPlace && rawMoveInput.magnitude > 0f)
+            if (lockedInPlaceTimer <= 0f && isLockedInPlace && rawMoveInput.magnitude > 0f)
             {
                 isLockedInPlace = false;
             }
@@ -772,7 +859,7 @@ public class PlayerObjectPioComponent : PioComponent
             if (isGrounded)
             {
                 // if grounded and trying to move walkingAnimatorHash
-                if (orientedMoveInput.magnitude > 0f)
+                if (orientedMoveInput.magnitude > 0f && !IsIncapacitated)
                 {
                     targetState = EPlayerObjectState.Walking;
                 }
