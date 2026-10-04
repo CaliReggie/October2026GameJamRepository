@@ -323,7 +323,7 @@ MonoBehaviour:
     m_Bits: 4225153
   raycastYOffset: 0.01
   raycastRadius: 0.1
-  raycastExtraDistance: 0.01
+  raycastExtraDistance: 0.1
   walkSpeed: 4
   moveLerpGrounded: 1
   moveLerpAirborne: 0.1
@@ -356,6 +356,7 @@ MonoBehaviour:
   healthRegenTickTimer: 0
   incapacitatedEffectGameObject: {fileID: 4023471651272456677}
   healthSlider: {fileID: 0}
+  healthRefreshImage: {fileID: 0}
   interactor: {fileID: 0}
 --- !u!114 &3925744941715817881
 MonoBehaviour:

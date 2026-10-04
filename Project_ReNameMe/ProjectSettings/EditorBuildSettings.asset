@@ -20,6 +20,9 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/---Scenes---/ApplicationPackage/SidGameTest.unity
     guid: 69bab4f1ab4a3b94e82ebcd34ff5f899
+  - enabled: 1
+    path: Assets/---Scenes---/ApplicationPackage/AdwaiBlockout.unity
+    guid: 72f63f92ea53d2c4c8827d0a8dc532cc
   m_configObjects:
     com.unity.adaptiveperformance.loader_settings: {fileID: 11400000, guid: 8d05d210e6116084b8ff15b40e336d37, type: 2}
     com.unity.adaptiveperformance.simulator.provider_settings: {fileID: 11400000, guid: 82a556f77e7a50f4fb47594f0042ac72, type: 2}

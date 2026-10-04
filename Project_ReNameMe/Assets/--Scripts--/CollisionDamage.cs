@@ -30,6 +30,9 @@ public class CollisionDamage : MonoBehaviour
             if (closestRespawnLocation != null)
             {
                 playerObjectPioComponent.TpPlayerObject(closestRespawnLocation.position,closestRespawnLocation.rotation.eulerAngles, false);
+                
+                playerObjectPioComponent.GetComponent<Rigidbody>().linearVelocity = Vector3.zero;
+                playerObjectPioComponent.GetComponent<Rigidbody>().angularVelocity = Vector3.zero;
             }
         }
 

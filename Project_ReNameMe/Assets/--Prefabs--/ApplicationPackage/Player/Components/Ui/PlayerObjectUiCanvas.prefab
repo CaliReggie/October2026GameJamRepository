@@ -337,9 +337,17 @@ PrefabInstance:
       propertyPath: m_SizeDelta.x
       value: -83.826
       objectReference: {fileID: 0}
+    - target: {fileID: 7168240029197347456, guid: 3bc8bdaae1933f64ca34ff3c021c5bdc, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 7643017979615769867, guid: 3bc8bdaae1933f64ca34ff3c021c5bdc, type: 3}
       propertyPath: m_fontSize
       value: 40.35
+      objectReference: {fileID: 0}
+    - target: {fileID: 8491651201016622644, guid: 3bc8bdaae1933f64ca34ff3c021c5bdc, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8632425119085724211, guid: 3bc8bdaae1933f64ca34ff3c021c5bdc, type: 3}
       propertyPath: m_fontSize
@@ -776,6 +784,10 @@ PrefabInstance:
       value: PlayerPlayPage
       objectReference: {fileID: 0}
     - target: {fileID: 2933932989537159355, guid: 15771e0ead7c2f749bca762175f5dc78, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6414393036891367628, guid: 15771e0ead7c2f749bca762175f5dc78, type: 3}
       propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}

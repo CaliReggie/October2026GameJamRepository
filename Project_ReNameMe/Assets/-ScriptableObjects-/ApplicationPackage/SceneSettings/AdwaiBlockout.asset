@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2efbdced89e9a90458959f9105eb3295, type: 3}
   m_Name: AdwaiBlockout
   m_EditorClassIdentifier: 
-  scenePath: 
+  scenePath: Assets/---Scenes---/ApplicationPackage/AdwaiBlockout.unity
   writeChanges: 0
   playerManagerSettings: {fileID: 11400000, guid: 182bc3caedab00e40b40fa683f98b741, type: 2}
   constantId: 1
