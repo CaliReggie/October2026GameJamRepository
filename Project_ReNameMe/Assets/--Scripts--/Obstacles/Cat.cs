@@ -64,7 +64,10 @@ public class Cat : MonoBehaviour
                 Vector3 lookPos = targetedPlayer.transform.position;
                 lookPos.y = transform.position.y;
                 transform.LookAt(lookPos);
-                if (attackRoutine == null) attackRoutine = StartCoroutine(AttackRoutine());
+                if (attackRoutine == null)
+                {
+                    attackRoutine = StartCoroutine(AttackRoutine());
+                }
                 break;
 
             case CatState.Patrol: agent.isStopped = false;
@@ -106,7 +109,7 @@ public class Cat : MonoBehaviour
             agent.SetDestination(targetedPlayer.transform.position);
         }
 
-        if (!canSeePlayer)
+        if (!canSeePlayer || targetedPlayer == null)
         {
             if (searchRoutine == null) searchRoutine = StartCoroutine(SearchRoutine());
         }
@@ -120,7 +123,7 @@ public class Cat : MonoBehaviour
     {
         animator.SetTrigger("Swipe");
         yield return new WaitForSeconds(1);
-        if (canSeePlayer) ChangeStates(CatState.Chasing);
+        if (canSeePlayer && targetedPlayer != null) ChangeStates(CatState.Chasing);
         else ChangeStates(CatState.Patrol);
         attackRoutine = null;
     }
@@ -157,8 +160,7 @@ public class Cat : MonoBehaviour
             Debug.DrawLine(transform.position, hit.transform.position);
             if (Physics.Raycast(ray, out RaycastHit hit2, lineOfSightDist, targetLayers))
             {
-                if (hit2.collider.gameObject.CompareTag("Player")
-                    && !hit2.collider.gameObject.GetComponent<PlayerObjectPioComponent>().IsIncapacitated)
+                if (hit2.collider.gameObject.CompareTag("Player"))
                 {
                     canSeePlayer = true;
                     targetedPlayer = hit2.collider.gameObject;
@@ -167,6 +169,7 @@ public class Cat : MonoBehaviour
                 else
                 {
                     canSeePlayer = false;
+                    targetedPlayer = null;
                 }
             }
         }
@@ -177,7 +180,6 @@ public class Cat : MonoBehaviour
             targetedPlayer.TryGetComponent<PlayerObjectPioComponent>(out var player);
             if (player != null && player.IsIncapacitated)
             {
-                StopAllCoroutines();
                 ChangeStates(CatState.Patrol);
             }
         }
