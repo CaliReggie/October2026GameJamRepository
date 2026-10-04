@@ -266,5 +266,7 @@ public class Interactable : MonoBehaviour
             Debug.LogWarning("Attempted to use an interactable that is PickupDropOnly. This is not allowed.");
             return;
         }
+        
+        
     }
 }
