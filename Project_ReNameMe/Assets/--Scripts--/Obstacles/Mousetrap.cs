@@ -6,4 +6,14 @@ public class Mousetrap : EventTriggerCollider
     {
         Debug.Log("Mousetrap Triggered");
     }
+
+    public override void OnTriggerEnter(Collider other)
+    {
+        base.OnTriggerEnter(other);
+
+        if (other.gameObject.TryGetComponent<PlayerObjectPioComponent>(out var player))
+        {
+            player.GetHitForDamage(1);
+        }
+    }
 }

@@ -8,6 +8,11 @@ public class Hitbox : MonoBehaviour
         {
             Debug.Log(other.gameObject.name);
             rb.AddForce((transform.position + Random.insideUnitSphere - transform.position) * 5, ForceMode.Impulse);
+
+            if (other.gameObject.TryGetComponent<PlayerObjectPioComponent>(out var input))
+            {
+                input.GetHitForDamage(1);
+            }
         }
     }
 }
