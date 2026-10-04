@@ -84,7 +84,7 @@ public class PlayerObjectPioComponent : PioComponent
     [SerializeField] private float jumpCoyoteBufferDuration = 0.2f;
     
     [Tooltip("The speed at which the player object will rotate towards target move when in a non-fixed player camera.")]
-    [SerializeField] [Range(0,1)] private float playerRotationEasing = 0.2f;
+    [SerializeField] [Range(0,1)] private float playerRotationEasing = 0.25f;
     
     [Header("Dynamic References - Don't Modify In Inspector")]
     
@@ -135,22 +135,23 @@ public class PlayerObjectPioComponent : PioComponent
 
     [SerializeField] private bool wasLockedInPlace;
     
-    [SerializeField] private float maximumLockedInPlaceInteractionAngle = 45f;
+    [SerializeField] private float maximumLockedInPlaceInteractionAngle = 75f;
 
+    [SerializeField] private float lockedInPlaceBounceHeight = 3f;
+    
     [field: SerializeField] public int BaseHealth { get; set; } = 1;
 
     [SerializeField] private int currentHealth;
     
-    [SerializeField] private float healthRegenTickDuration = 10f;
+    [SerializeField] private float healthRegenTickDuration = 7f;
     
-    [SerializeField] private float incapacitatedDuration = 25f;
+    [SerializeField] private float incapacitatedDuration = 28f;
     
     [SerializeField] private float healthRegenTickTimer;
 
-    public bool IsIncapacitated => currentHealth <= 0;
+    [SerializeField] private GameObject incapacitatedEffectGameObject;
 
-    [SerializeField]
-    private float lockedInPlaceBounceHeight = 4.5f;
+    public bool IsIncapacitated => currentHealth <= 0;
     
     public Animator Animator { get => animator; set => animator = value; }
     
@@ -289,7 +290,6 @@ public class PlayerObjectPioComponent : PioComponent
     }
     
     //ADDED FOR SQUIRREL GAME
-    // public void GetHitByTrap(){}
     
     public void GetHitForDamage(int damageAmount)
     {
@@ -306,12 +306,36 @@ public class PlayerObjectPioComponent : PioComponent
                 // player just became incapacitated
                 healthRegenTickTimer = incapacitatedDuration;
                 
+                incapacitatedEffectGameObject.SetActive(true);
+                
                 //todo: became incapacitated stuff
             }
         }
         else if (currentHealth < BaseHealth)
         {
             // player is damaged but not incapacitated
+            healthRegenTickTimer = healthRegenTickDuration;
+            
+            //todo: get hit stuff
+        }
+    }
+    
+    public void HealForHealth(int healAmount)
+    {
+        currentHealth += healAmount;
+        
+        if (currentHealth > BaseHealth)
+        {
+            currentHealth = BaseHealth;
+        }
+        
+        if (currentHealth > 0)
+        {
+            incapacitatedEffectGameObject.SetActive(false);
+        }
+        
+        if (currentHealth < BaseHealth)
+        {
             healthRegenTickTimer = healthRegenTickDuration;
         }
     }
@@ -541,6 +565,8 @@ public class PlayerObjectPioComponent : PioComponent
         
         isLockedInPlace = false;
         
+        incapacitatedEffectGameObject.SetActive(false);
+        
         if (Pio.IsSmallSquirrel)
         {
             playerCameraComponent.SetLockedInPlaceCam(false);
@@ -660,42 +686,8 @@ public class PlayerObjectPioComponent : PioComponent
                 
                 if (healthRegenTickTimer <= 0f && currentHealth < BaseHealth)
                 {
-                    if (IsIncapacitated)
-                    {
-                        currentHealth = BaseHealth;
-                    }
-                    else
-                    {
-                        currentHealth++;
-                        
-                        if (currentHealth < BaseHealth)
-                        {
-                            healthRegenTickTimer = healthRegenTickDuration;
-                        }
-                        else
-                        {
-                            currentHealth = BaseHealth;
-                        }
-                    }
+                    HealForHealth(1);
                 }
-            }
-            
-            if (IsIncapacitated)
-            {
-                if (healthRegenTickTimer > 0f)
-                {
-                    
-                }
-                else
-                {
-                    currentHealth = BaseHealth;
-                    
-                    healthRegenTickTimer = healthRegenTickDuration;
-                }
-            }
-            else
-            {
-                
             }
             
             // counting down jump cooldowns and timers
@@ -804,13 +796,6 @@ public class PlayerObjectPioComponent : PioComponent
 
         void ManageTargetMove()
         {
-            if (isLockedInPlace)
-            {
-                targetMove = Vector3.zero;
-                
-                return;
-            }
-            
             // lateral management
             targetMove.x = orientedMoveInput.x * walkSpeed;
             
